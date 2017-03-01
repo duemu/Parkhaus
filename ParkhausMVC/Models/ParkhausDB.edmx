@@ -1,0 +1,508 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ParkhausDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Dauermieter">
+          <Key>
+            <PropertyRef Name="DauermieterID" />
+          </Key>
+          <Property Name="DauermieterID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="250" />
+          <Property Name="Vorname" Type="varchar" MaxLength="250" />
+          <Property Name="Code" Type="int" />
+          <Property Name="ParkplatzID" Type="int" />
+        </EntityType>
+        <EntityType Name="Parkplatz">
+          <Key>
+            <PropertyRef Name="ParkplatzID" />
+          </Key>
+          <Property Name="ParkplatzID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Parkplatznummer" Type="int" />
+          <Property Name="StockwerkID" Type="int" />
+        </EntityType>
+        <EntityType Name="Stockwerk">
+          <Key>
+            <PropertyRef Name="StockwerkID" />
+          </Key>
+          <Property Name="StockwerkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Bezeichung" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Tarif">
+          <Key>
+            <PropertyRef Name="TarifID" />
+          </Key>
+          <Property Name="TarifID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TarifTyp" Type="int" Nullable="false" />
+          <Property Name="Zeit" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Preis" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="TicketID" />
+          </Key>
+          <Property Name="TicketID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Eingangsdatum" Type="datetime" Nullable="false" />
+          <Property Name="Ausgangsdatum" Type="datetime" />
+          <Property Name="ParkplatzID" Type="int" />
+          <Property Name="Preis" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Zahlung">
+          <Key>
+            <PropertyRef Name="ZahlungID" />
+          </Key>
+          <Property Name="ZahlungID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Preis" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="DauermieterID" Type="int" Nullable="false" />
+          <Property Name="Datum" Type="date" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ParkhausDB.dbo.Freie_Parkplaetze' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Freie_Parkplaetze">
+          <Key>
+            <PropertyRef Name="ParkplatzID" />
+            <PropertyRef Name="StockwerkID" />
+          </Key>
+          <Property Name="Parkplatznummer" Type="int" />
+          <Property Name="ParkplatzID" Type="int" Nullable="false" />
+          <Property Name="StockwerkID" Type="int" Nullable="false" />
+          <Property Name="Bezeichung" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ParkhausDB.dbo.Freie_Plaetze_Pro_Stockwerk' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Freie_Plaetze_Pro_Stockwerk">
+          <Key>
+            <PropertyRef Name="StockwerkID" />
+          </Key>
+          <Property Name="AnzahlParkplätze" Type="int" />
+          <Property Name="StockwerkID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Umsatz_pro_Monat">
+          <Key>
+            <PropertyRef Name="EDMXID" />
+            <PropertyRef Name="Typ" />
+          </Key>
+          <Property Name="EDMXID" Type="int" Nullable="false" />
+          <Property Name="Typ" Type="varchar" MaxLength="18" Nullable="false" />
+          <Property Name="Monat" Type="nvarchar" MaxLength="30" />
+          <Property Name="Jahr" Type="int" />
+          <Property Name="Preis" Type="decimal" Precision="38" Scale="2" />
+        </EntityType>
+        <Association Name="FK_Dauermieter_Parkplatz">
+          <End Role="Parkplatz" Type="Self.Parkplatz" Multiplicity="0..1" />
+          <End Role="Dauermieter" Type="Self.Dauermieter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parkplatz">
+              <PropertyRef Name="ParkplatzID" />
+            </Principal>
+            <Dependent Role="Dauermieter">
+              <PropertyRef Name="ParkplatzID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Parkplatz_Stockwerk">
+          <End Role="Stockwerk" Type="Self.Stockwerk" Multiplicity="0..1" />
+          <End Role="Parkplatz" Type="Self.Parkplatz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stockwerk">
+              <PropertyRef Name="StockwerkID" />
+            </Principal>
+            <Dependent Role="Parkplatz">
+              <PropertyRef Name="StockwerkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Parkplatz">
+          <End Role="Parkplatz" Type="Self.Parkplatz" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parkplatz">
+              <PropertyRef Name="ParkplatzID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="ParkplatzID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zahlung_Dauermieter">
+          <End Role="Dauermieter" Type="Self.Dauermieter" Multiplicity="1" />
+          <End Role="Zahlung" Type="Self.Zahlung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dauermieter">
+              <PropertyRef Name="DauermieterID" />
+            </Principal>
+            <Dependent Role="Zahlung">
+              <PropertyRef Name="DauermieterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ParkhausDBModelStoreContainer">
+          <EntitySet Name="Dauermieter" EntityType="Self.Dauermieter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parkplatz" EntityType="Self.Parkplatz" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stockwerk" EntityType="Self.Stockwerk" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tarif" EntityType="Self.Tarif" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zahlung" EntityType="Self.Zahlung" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Freie_Parkplaetze" EntityType="Self.Freie_Parkplaetze" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Freie_Parkplaetze].[Parkplatznummer] AS [Parkplatznummer], 
+    [Freie_Parkplaetze].[ParkplatzID] AS [ParkplatzID], 
+    [Freie_Parkplaetze].[StockwerkID] AS [StockwerkID], 
+    [Freie_Parkplaetze].[Bezeichung] AS [Bezeichung]
+    FROM [dbo].[Freie_Parkplaetze] AS [Freie_Parkplaetze]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Freie_Plaetze_Pro_Stockwerk" EntityType="Self.Freie_Plaetze_Pro_Stockwerk" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Freie_Plaetze_Pro_Stockwerk].[AnzahlParkplätze] AS [AnzahlParkplätze], 
+    [Freie_Plaetze_Pro_Stockwerk].[StockwerkID] AS [StockwerkID]
+    FROM [dbo].[Freie_Plaetze_Pro_Stockwerk] AS [Freie_Plaetze_Pro_Stockwerk]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Umsatz_pro_Monat" EntityType="Self.Umsatz_pro_Monat" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Umsatz_pro_Monat].[EDMXID] AS [EDMXID], 
+    [Umsatz_pro_Monat].[Typ] AS [Typ], 
+    [Umsatz_pro_Monat].[Monat] AS [Monat], 
+    [Umsatz_pro_Monat].[Jahr] AS [Jahr], 
+    [Umsatz_pro_Monat].[Preis] AS [Preis]
+    FROM [dbo].[Umsatz_pro_Monat] AS [Umsatz_pro_Monat]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Dauermieter_Parkplatz" Association="Self.FK_Dauermieter_Parkplatz">
+            <End Role="Parkplatz" EntitySet="Parkplatz" />
+            <End Role="Dauermieter" EntitySet="Dauermieter" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Parkplatz_Stockwerk" Association="Self.FK_Parkplatz_Stockwerk">
+            <End Role="Stockwerk" EntitySet="Stockwerk" />
+            <End Role="Parkplatz" EntitySet="Parkplatz" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Parkplatz" Association="Self.FK_Ticket_Parkplatz">
+            <End Role="Parkplatz" EntitySet="Parkplatz" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zahlung_Dauermieter" Association="Self.FK_Zahlung_Dauermieter">
+            <End Role="Dauermieter" EntitySet="Dauermieter" />
+            <End Role="Zahlung" EntitySet="Zahlung" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ParkhausDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Parkplatz">
+          <Key>
+            <PropertyRef Name="ParkplatzID" />
+          </Key>
+          <Property Name="ParkplatzID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Parkplatznummer" Type="Int32" />
+          <Property Name="StockwerkID" Type="Int32" />
+          <NavigationProperty Name="Stockwerk" Relationship="Self.FK_Parkplatz_Stockwerk" FromRole="Parkplatz" ToRole="Stockwerk" />
+          <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_Parkplatz" FromRole="Parkplatz" ToRole="Ticket" />
+          <NavigationProperty Name="Dauermieter" Relationship="ParkhausDBModel.FK_Dauermieter_Parkplatz" FromRole="Parkplatz" ToRole="Dauermieter" />
+        </EntityType>
+        <EntityType Name="Stockwerk">
+          <Key>
+            <PropertyRef Name="StockwerkID" />
+          </Key>
+          <Property Name="StockwerkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Bezeichung" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Parkplatz" Relationship="Self.FK_Parkplatz_Stockwerk" FromRole="Stockwerk" ToRole="Parkplatz" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Tarif">
+          <Key>
+            <PropertyRef Name="TarifID" />
+          </Key>
+          <Property Name="TarifID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TarifTyp" Type="Int32" Nullable="false" />
+          <Property Name="Zeit" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Preis" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="TicketID" />
+          </Key>
+          <Property Name="TicketID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Eingangsdatum" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ausgangsdatum" Type="DateTime" Precision="3" />
+          <Property Name="ParkplatzID" Type="Int32" />
+          <Property Name="Preis" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Parkplatz" Relationship="Self.FK_Ticket_Parkplatz" FromRole="Ticket" ToRole="Parkplatz" />
+        </EntityType>
+        <EntityType Name="Freie_Parkplaetze">
+          <Key>
+            <PropertyRef Name="ParkplatzID" />
+            <PropertyRef Name="StockwerkID" />
+          </Key>
+          <Property Name="Parkplatznummer" Type="Int32" />
+          <Property Name="ParkplatzID" Type="Int32" Nullable="false" />
+          <Property Name="StockwerkID" Type="Int32" Nullable="false" />
+          <Property Name="Bezeichung" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Freie_Plaetze_Pro_Stockwerk">
+          <Key>
+            <PropertyRef Name="StockwerkID" />
+          </Key>
+          <Property Name="AnzahlParkplätze" Type="Int32" />
+          <Property Name="StockwerkID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Parkplatz_Stockwerk">
+          <End Role="Stockwerk" Type="Self.Stockwerk" Multiplicity="0..1" />
+          <End Role="Parkplatz" Type="Self.Parkplatz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stockwerk">
+              <PropertyRef Name="StockwerkID" />
+            </Principal>
+            <Dependent Role="Parkplatz">
+              <PropertyRef Name="StockwerkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Parkplatz">
+          <End Role="Parkplatz" Type="Self.Parkplatz" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parkplatz">
+              <PropertyRef Name="ParkplatzID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="ParkplatzID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ParkhausDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Parkplatz" EntityType="Self.Parkplatz" />
+          <EntitySet Name="Stockwerk" EntityType="Self.Stockwerk" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Tarif" EntityType="Self.Tarif" />
+          <EntitySet Name="Ticket" EntityType="Self.Ticket" />
+          <EntitySet Name="Freie_Parkplaetze" EntityType="Self.Freie_Parkplaetze" />
+          <EntitySet Name="Freie_Plaetze_Pro_Stockwerk" EntityType="Self.Freie_Plaetze_Pro_Stockwerk" />
+          <AssociationSet Name="FK_Parkplatz_Stockwerk" Association="Self.FK_Parkplatz_Stockwerk">
+            <End Role="Stockwerk" EntitySet="Stockwerk" />
+            <End Role="Parkplatz" EntitySet="Parkplatz" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Parkplatz" Association="Self.FK_Ticket_Parkplatz">
+            <End Role="Parkplatz" EntitySet="Parkplatz" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <EntitySet Name="Dauermieter" EntityType="ParkhausDBModel.Dauermieter" />
+          <AssociationSet Name="FK_Dauermieter_Parkplatz" Association="ParkhausDBModel.FK_Dauermieter_Parkplatz">
+            <End Role="Parkplatz" EntitySet="Parkplatz" />
+            <End Role="Dauermieter" EntitySet="Dauermieter" />
+          </AssociationSet>
+          <EntitySet Name="Zahlung" EntityType="ParkhausDBModel.Zahlung" />
+          <AssociationSet Name="FK_Zahlung_Dauermieter" Association="ParkhausDBModel.FK_Zahlung_Dauermieter">
+            <End Role="Dauermieter" EntitySet="Dauermieter" />
+            <End Role="Zahlung" EntitySet="Zahlung" />
+          </AssociationSet>
+          <EntitySet Name="Umsatz_pro_Monat" EntityType="ParkhausDBModel.Umsatz_pro_Monat" />
+        </EntityContainer>
+        <EntityType Name="Dauermieter">
+          <Key>
+            <PropertyRef Name="DauermieterID" />
+          </Key>
+          <Property Name="DauermieterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Vorname" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="Int32" />
+          <Property Name="ParkplatzID" Type="Int32" />
+          <NavigationProperty Name="Parkplatz" Relationship="ParkhausDBModel.FK_Dauermieter_Parkplatz" FromRole="Dauermieter" ToRole="Parkplatz" />
+          <NavigationProperty Name="Zahlung" Relationship="ParkhausDBModel.FK_Zahlung_Dauermieter" FromRole="Dauermieter" ToRole="Zahlung" />
+        </EntityType>
+        <Association Name="FK_Dauermieter_Parkplatz">
+          <End Type="ParkhausDBModel.Parkplatz" Role="Parkplatz" Multiplicity="0..1" />
+          <End Type="ParkhausDBModel.Dauermieter" Role="Dauermieter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parkplatz">
+              <PropertyRef Name="ParkplatzID" />
+            </Principal>
+            <Dependent Role="Dauermieter">
+              <PropertyRef Name="ParkplatzID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Zahlung">
+          <Key>
+            <PropertyRef Name="ZahlungID" />
+          </Key>
+          <Property Name="ZahlungID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Preis" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="DauermieterID" Type="Int32" Nullable="false" />
+          <Property Name="Datum" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Dauermieter" Relationship="ParkhausDBModel.FK_Zahlung_Dauermieter" FromRole="Zahlung" ToRole="Dauermieter" />
+        </EntityType>
+        <Association Name="FK_Zahlung_Dauermieter">
+          <End Type="ParkhausDBModel.Dauermieter" Role="Dauermieter" Multiplicity="1" />
+          <End Type="ParkhausDBModel.Zahlung" Role="Zahlung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dauermieter">
+              <PropertyRef Name="DauermieterID" />
+            </Principal>
+            <Dependent Role="Zahlung">
+              <PropertyRef Name="DauermieterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Umsatz_pro_Monat">
+          <Key>
+            <PropertyRef Name="EDMXID" />
+            <PropertyRef Name="Typ" />
+          </Key>
+          <Property Name="EDMXID" Type="Int32" Nullable="false" />
+          <Property Name="Typ" Type="String" Nullable="false" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="Monat" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Jahr" Type="Int32" />
+          <Property Name="Preis" Type="Decimal" Precision="38" Scale="2" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ParkhausDBModelStoreContainer" CdmEntityContainer="ParkhausDBEntities">
+          <EntitySetMapping Name="Parkplatz">
+            <EntityTypeMapping TypeName="ParkhausDBModel.Parkplatz">
+              <MappingFragment StoreEntitySet="Parkplatz">
+                <ScalarProperty Name="ParkplatzID" ColumnName="ParkplatzID" />
+                <ScalarProperty Name="Parkplatznummer" ColumnName="Parkplatznummer" />
+                <ScalarProperty Name="StockwerkID" ColumnName="StockwerkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stockwerk">
+            <EntityTypeMapping TypeName="ParkhausDBModel.Stockwerk">
+              <MappingFragment StoreEntitySet="Stockwerk">
+                <ScalarProperty Name="StockwerkID" ColumnName="StockwerkID" />
+                <ScalarProperty Name="Bezeichung" ColumnName="Bezeichung" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ParkhausDBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tarif">
+            <EntityTypeMapping TypeName="ParkhausDBModel.Tarif">
+              <MappingFragment StoreEntitySet="Tarif">
+                <ScalarProperty Name="TarifID" ColumnName="TarifID" />
+                <ScalarProperty Name="TarifTyp" ColumnName="TarifTyp" />
+                <ScalarProperty Name="Zeit" ColumnName="Zeit" />
+                <ScalarProperty Name="Preis" ColumnName="Preis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket">
+            <EntityTypeMapping TypeName="ParkhausDBModel.Ticket">
+              <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="TicketID" ColumnName="TicketID" />
+                <ScalarProperty Name="Eingangsdatum" ColumnName="Eingangsdatum" />
+                <ScalarProperty Name="Ausgangsdatum" ColumnName="Ausgangsdatum" />
+                <ScalarProperty Name="ParkplatzID" ColumnName="ParkplatzID" />
+                <ScalarProperty Name="Preis" ColumnName="Preis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Freie_Parkplaetze">
+            <EntityTypeMapping TypeName="ParkhausDBModel.Freie_Parkplaetze">
+              <MappingFragment StoreEntitySet="Freie_Parkplaetze">
+                <ScalarProperty Name="Parkplatznummer" ColumnName="Parkplatznummer" />
+                <ScalarProperty Name="ParkplatzID" ColumnName="ParkplatzID" />
+                <ScalarProperty Name="StockwerkID" ColumnName="StockwerkID" />
+                <ScalarProperty Name="Bezeichung" ColumnName="Bezeichung" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Freie_Plaetze_Pro_Stockwerk">
+            <EntityTypeMapping TypeName="ParkhausDBModel.Freie_Plaetze_Pro_Stockwerk">
+              <MappingFragment StoreEntitySet="Freie_Plaetze_Pro_Stockwerk">
+                <ScalarProperty Name="AnzahlParkplätze" ColumnName="AnzahlParkplätze" />
+                <ScalarProperty Name="StockwerkID" ColumnName="StockwerkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dauermieter">
+            <EntityTypeMapping TypeName="ParkhausDBModel.Dauermieter">
+              <MappingFragment StoreEntitySet="Dauermieter">
+                <ScalarProperty Name="ParkplatzID" ColumnName="ParkplatzID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Vorname" ColumnName="Vorname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DauermieterID" ColumnName="DauermieterID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zahlung">
+            <EntityTypeMapping TypeName="ParkhausDBModel.Zahlung">
+              <MappingFragment StoreEntitySet="Zahlung">
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
+                <ScalarProperty Name="DauermieterID" ColumnName="DauermieterID" />
+                <ScalarProperty Name="Preis" ColumnName="Preis" />
+                <ScalarProperty Name="ZahlungID" ColumnName="ZahlungID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Umsatz_pro_Monat">
+            <EntityTypeMapping TypeName="ParkhausDBModel.Umsatz_pro_Monat">
+              <MappingFragment StoreEntitySet="Umsatz_pro_Monat">
+                <ScalarProperty Name="Preis" ColumnName="Preis" />
+                <ScalarProperty Name="Jahr" ColumnName="Jahr" />
+                <ScalarProperty Name="Monat" ColumnName="Monat" />
+                <ScalarProperty Name="Typ" ColumnName="Typ" />
+                <ScalarProperty Name="EDMXID" ColumnName="EDMXID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

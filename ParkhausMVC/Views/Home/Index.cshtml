@@ -1,0 +1,80 @@
+﻿@model List<ParkhausMVC.Models.Stockwerk>
+@{
+    ViewBag.Title = "Übersicht";
+}
+<div class="row">
+    <div class="col-md-2 no-float sidebar">
+        <div id="schranke_div" class="panel">
+            <div class="alert alert-danger alert-dismissible" id="steuerung-alert" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Fehler!</strong><span class="message"></span>
+            </div>
+            <h3>Schrankensteuerung</h3>
+            <div class="input-group-sm">
+                <label for="eintrittsdatum">Eintrittsdatum</label>
+                <input type="datetime" id="eintrittsdatum" class="form-control datetimepicker" name="eintrittsdatum" />
+            </div>
+            <div class="input-group-sm">
+                <label><input type="radio" checked id="rdoGelegenheitsnutzer" value="gelegenheitsnutzer" name="parking-typ">Gelegenheitsnutzer</label>
+                <label><input type="radio" id="rdoDauermieter" value="dauermieter" name="parking-typ">Dauermieter</label>
+            </div>
+            <div class="input-group-sm">
+                <label for="eintrittscode">Eintrittscode</label>
+                <input type="number" id="eintrittscode" disabled class="form-control" name="eintrittscode" />
+            </div>
+            <div class="input-group-sm">
+                <button id="btnEintreten" disabled class="btn btn-default">Eintreten</button>
+            </div>
+            <div class="input-group-sm">
+                <label for="austrittsdatum">Austrittsdatum</label>
+                <input type="datetime" id="austrittsdatum" class="form-control datetimepicker" />
+            </div>
+            <div class="input-group-sm">
+                <button id="btnAustreten" disabled class="btn btn-default">Austreten</button>
+            </div>
+        </div>
+        <div id="ticket_div" class="panel">
+            <h3>Ticket</h3>
+            @Html.Partial("_Ticket")
+        </div>
+    </div>
+    <div class="col-md-12 no-float">
+        <div class="panel vis">
+            <h2>Parkplatzvisualisierung</h2>
+            <div class="pp-row">
+                @{ foreach (var stockwerk in Model)
+                    {
+                        <div class="stockwerk">
+                            <h4>Stockwerk @stockwerk.Bezeichung</h4>
+                            @foreach (var platz in stockwerk.Parkplatz)
+                            {
+                                string klasse = "frei";
+                                if (!platz.ist_Frei())
+                                {
+                                    klasse = "belegt";
+                                }
+
+                                string dauermieter_klasse = "";
+                                if (platz.hat_dauermieter())
+                                {
+                                    dauermieter_klasse = "dauermieter";
+                                }
+
+                                <div id="@platz.ParkplatzID" class="pp @klasse @dauermieter_klasse"><p>@platz.Parkplatznummer</p></div>
+                            }
+                        </div>
+                    }
+                }
+              
+            </div>
+            <div id="vis-legende">
+                <h4> Legende</h4>
+                <div class="column"><div class="pp legende belegt"> </div><div class="legende ">Belegt</div> </div>
+                <div class="column"> <div class="pp legende frei"> </div><div class="legende ">Frei</div> </div>
+                <div class="column"><div class="pp legende dauermieter"> </div><div class="legende ">Dauermieter</div> </div>
+            </div>
+         
+        </div>
+     
+    </div>
+</div>

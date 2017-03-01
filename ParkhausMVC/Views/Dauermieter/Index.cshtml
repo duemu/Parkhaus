@@ -1,0 +1,35 @@
+﻿@model List<ParkhausMVC.Models.Dauermieter>
+@{
+    ViewBag.Title = "Dauermieter";
+}
+<div class="container">
+    <h3>Dauermieter</h3>
+    <a class="btn btn-default" href="/Dauermieter/Hinzufuegen"><i class="glyphicon glyphicon-plus"> </i><i class="glyphicon glyphicon-user"> </i> Dauermieter hinzufügen</a>
+    
+    <table class="table table-hover">
+        <thead>
+            <tr><td>Name</td><td>Vorname</td><td>Parkplatz</td><td>Stockwerk</td><td>Eingangscode</td><td>Monatsbeitrag</td></tr>
+        </thead>
+        <tbody>
+            @if(Model.Count != 0) {
+
+            foreach (var dauermieter in Model)
+            {
+                <tr><td>@dauermieter.Name</td><td>@dauermieter.Vorname</td><td>@dauermieter.Parkplatz.Parkplatznummer</td><td>@dauermieter.Parkplatz.Stockwerk.Bezeichung</td><td>@dauermieter.Code</td>
+                    <td>
+                        @if (dauermieter.hat_rechung_bezahlt(false))
+                        {
+                            <text><i class="glyphicon glyphicon-ok"></i> Bezahlt</text>
+
+                        }
+                        else
+                        {
+                            <a href="/Dauermieter/Bezahlen?dauermieterID=@dauermieter.DauermieterID"><i class="glyphicon glyphicon-usd"></i> Bezahlen</a>
+                        }
+                    </td>
+               </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
