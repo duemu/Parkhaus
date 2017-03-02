@@ -46,7 +46,7 @@
           </Key>
           <Property Name="TarifID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TarifTyp" Type="int" Nullable="false" />
-          <Property Name="Zeit" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Zeit" Type="numeric" Precision="18" Scale="2" />
           <Property Name="Preis" Type="numeric" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="Ticket">
@@ -237,7 +237,7 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
           </Key>
           <Property Name="TarifID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TarifTyp" Type="Int32" Nullable="false" />
-          <Property Name="Zeit" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Zeit" Type="Decimal" />
           <Property Name="Preis" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="Ticket">

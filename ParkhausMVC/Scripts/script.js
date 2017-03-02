@@ -57,6 +57,13 @@
                     $('#eintrittsdatum').val("");
                     $('#eintrittscode').val("");
                     $('#btnEintreten').prop('disabled', true);
+
+                    $('.pp-row').animate({
+                        scrollTop: $('#stockwerk' + data.stockwerkID).offsetParent().top
+                    }, 500);
+
+
+
                     $('#' + data.parkplatzID).addClass("belegt");
                     if (typ = 'Gelegenheitsnutzer') {
                         ticket_anzeigen(data.parkplatzID);

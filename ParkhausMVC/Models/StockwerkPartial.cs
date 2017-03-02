@@ -25,6 +25,15 @@ namespace ParkhausMVC.Models
             _context.SaveChanges();
         }
 
+        public List<Parkplatz> Freie_Parkplaetze()
+        {
+            return this.Parkplatz.Where(p => p.ist_Frei() && !p.hat_dauermieter()).ToList();
+        }
+
+        public int Anzahl_freie_Parkplaetze()
+        {
+            return this.Parkplatz.Where(p => p.ist_Frei() && !p.hat_dauermieter()).Count();
+        }
 
         public void bearbeiten(string bezeichnung, int anzParkplaetze)
         {

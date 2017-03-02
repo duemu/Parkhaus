@@ -22,7 +22,7 @@ namespace ParkhausMVC.Models
 
                 if (dauermieter == null) throw new Exception("Code inkorrekt");
 
-                if (!dauermieter.hat_rechung_bezahlt(true))
+                if (!dauermieter.hat_rechung_bezahlt(eingangsdatum))
                 {
                     throw new Exception("Sie haben Ihre Rechnung noch nicht bezahlt!");
                 }
@@ -36,8 +36,8 @@ namespace ParkhausMVC.Models
             }
             else
             {
-                pp = pc.hole_Parkplatz();
-                if (pp == null) throw new Exception("Alle Parkplätze sind belegt");
+                ParkplatzListe parkplätze = new ParkplatzListe();
+                pp = parkplätze.hole_Parkplatz();
             }
 
             this.Eingangsdatum = eingangsdatum;

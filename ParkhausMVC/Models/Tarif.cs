@@ -16,7 +16,7 @@ namespace ParkhausMVC.Models
     {
         public int TarifID { get; set; }
         public int TarifTyp { get; set; }
-        public decimal Zeit { get; set; }
+        public Nullable<decimal> Zeit { get; set; }
         public decimal Preis { get; set; }
     }
 }

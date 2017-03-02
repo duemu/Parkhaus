@@ -58,14 +58,13 @@ namespace ParkhausMVC
 
             //Stunde holen
             int hour = eintrittszeit.Hour;
-
-            //Tarif tarif = context.Tarifs.Where(t => t.TarifTyp == tarifType && t.Zeit <= hour).Last();
-
+            
+            
             List<Tarif> tarifs = context.Tarif.Where(t => t.TarifTyp == tarifType && t.Zeit <= hour).OrderBy(t => t.Zeit).ToList();
 
             Tarif tarif = tarifs.Last();
 
-           totalPreis += (double) tarif.Preis * schritt;
+            totalPreis += (double) tarif.Preis * schritt;
 
             eintrittszeit = eintrittszeit.AddHours(schritt);
 

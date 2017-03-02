@@ -39,7 +39,8 @@ namespace ParkhausMVC.Controllers
                 tiketID = t.TicketID,
                 parkplatzID = p.ParkplatzID,
                 parkplatzNr = p.Parkplatznummer,
-                stockwerk = p.Stockwerk.Bezeichung
+                stockwerk = p.Stockwerk.Bezeichung,
+                stockwerkID = p.StockwerkID
             });
         }
 

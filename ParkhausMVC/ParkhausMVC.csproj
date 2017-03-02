@@ -221,6 +221,7 @@
     <Compile Include="Models\Tarif.cs">
       <DependentUpon>ParkhausDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TarifPartial.cs" />
     <Compile Include="Models\Ticket.cs">
       <DependentUpon>ParkhausDB.tt</DependentUpon>
     </Compile>

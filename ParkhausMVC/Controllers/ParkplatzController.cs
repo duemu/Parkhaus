@@ -21,7 +21,12 @@ namespace ParkhausMVC.Controllers
                 return null;
             }
 
-            int stockwerkID = stockwerk_mit_meisten_plaetzen().StockwerkID;
+            int min = context.Stockwerk.Max(s => s.Anzahl_freie_Parkplaetze());
+
+            int stockwerkID = context.Stockwerk.Where(s => s.Anzahl_freie_Parkplaetze() == min).OrderBy(s => s.StockwerkID).First().StockwerkID;
+
+            //int stockwerkID = stockwerk_mit_meisten_plaetzen().StockwerkID;
+
 
             List <Freie_Parkplaetze> freieParkplätze = context.Freie_Parkplaetze.Where(fr => fr.StockwerkID == stockwerkID).ToList();
 

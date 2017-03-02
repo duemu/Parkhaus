@@ -45,7 +45,7 @@
                 @{ foreach (var stockwerk in Model)
                     {
                         <div class="stockwerk">
-                            <h4>Stockwerk @stockwerk.Bezeichung</h4>
+                            <h4 id="@("stockwerk"+stockwerk.StockwerkID)" data-stockwerk="@stockwerk.StockwerkID">Stockwerk @stockwerk.Bezeichung</h4>
                             @foreach (var platz in stockwerk.Parkplatz)
                             {
                                 string klasse = "frei";

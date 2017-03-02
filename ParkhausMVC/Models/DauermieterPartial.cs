@@ -10,7 +10,7 @@ namespace ParkhausMVC.Models
     {
         ParkhausDBEntities _context = new ParkhausDBEntities();
 
-        ParkplatzController pc = new ParkplatzController();
+        //ParkplatzController pc = new ParkplatzController();
 
         public void rechnung_bezahlen()
         {
@@ -36,9 +36,10 @@ namespace ParkhausMVC.Models
             _context.SaveChanges();
         }
 
-        public void parkplatz_zuweisen()
+        private void parkplatz_zuweisen()
         {
-            Parkplatz pp = pc.hole_Parkplatz();
+            ParkplatzListe parkplaetze = new ParkplatzListe();
+            Parkplatz pp = parkplaetze.hole_Parkplatz();
 
             if (pp == null) throw new Exception("Alle Parkplätze sind belegt");
 
@@ -46,7 +47,7 @@ namespace ParkhausMVC.Models
 
         }
 
-        public void code_generieren()
+        private void code_generieren()
         {
             int count = 0;
 
@@ -64,29 +65,33 @@ namespace ParkhausMVC.Models
         }
        
 
-        public bool hat_rechung_bezahlt(bool vor_dem_15en)
+        public bool hat_rechung_bezahlt()
         {
             DateTime heute = DateTime.Now.Date;
 
-            if (vor_dem_15en)
-            {
-                if(heute.Day < 15)
-                {
-                    heute.AddMonths(-1);
-                }
-            }
-
             int count = _context.Zahlung.Where(z => z.DauermieterID == this.DauermieterID && z.Datum.Month == heute.Month && z.Datum.Year == heute.Year).Count();
 
-            if(count != 0)
-            {
-                return true;
-            }
+            if(count != 0) return true;
+            
+            return false;
+        }
+
+        public bool hat_rechung_bezahlt(DateTime eingangsdatum)
+        {
+            //Liegt das Eingangsdatum von dem 15. wird geprüft, ob die Rechnung für den Vormonat bezahlt wurde
+            if (eingangsdatum.Day < 15)
+                {
+                    eingangsdatum.AddMonths(-1);
+                }
+
+            int count = _context.Zahlung.Where(z => z.DauermieterID == this.DauermieterID && z.Datum.Month == eingangsdatum.Month && z.Datum.Year == eingangsdatum.Year).Count();
+
+            if (count != 0) return true;
+            
             return false;
         }
 
 
-      
 
     }
 }

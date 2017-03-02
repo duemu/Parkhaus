@@ -48,6 +48,34 @@ namespace ParkhausMVC.Controllers
         }
 
 
+        public ActionResult tarif_hinzufuegen(int typ, decimal zeit, decimal preis)
+        {
+            Tarif tarif = new Tarif(typ, zeit, preis);
+
+            return RedirectToAction("Tarif");
+        }
+
+        public ActionResult tarif_bearbeiten(int id, decimal zeit, decimal preis)
+        {
+            Tarif tarif = _context.Tarif.Where(t => t.TarifID == id).First();
+
+            tarif.bearbeiten(zeit, preis);
+
+            return RedirectToAction("Tarif");
+
+
+        }
+
+        public void tarif_loeschen(int id)
+        {
+
+            Tarif tarif = _context.Tarif.Where(t => t.TarifID == id).First();
+
+            tarif.loeschen();
+
+        }
+
+
 
     }
 }
