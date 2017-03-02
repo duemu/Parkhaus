@@ -28,12 +28,12 @@ namespace ParkhausMVC.Models
         public virtual DbSet<Parkplatz> Parkplatz { get; set; }
         public virtual DbSet<Stockwerk> Stockwerk { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
-        public virtual DbSet<Tarif> Tarif { get; set; }
         public virtual DbSet<Ticket> Ticket { get; set; }
         public virtual DbSet<Freie_Parkplaetze> Freie_Parkplaetze { get; set; }
         public virtual DbSet<Freie_Plaetze_Pro_Stockwerk> Freie_Plaetze_Pro_Stockwerk { get; set; }
         public virtual DbSet<Dauermieter> Dauermieter { get; set; }
         public virtual DbSet<Zahlung> Zahlung { get; set; }
         public virtual DbSet<Umsatz_pro_Monat> Umsatz_pro_Monat { get; set; }
+        public virtual DbSet<Tarif> Tarif { get; set; }
     }
 }

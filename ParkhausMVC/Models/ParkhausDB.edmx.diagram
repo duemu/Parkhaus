@@ -8,7 +8,6 @@
         <EntityTypeShape EntityType="ParkhausDBModel.Parkplatz" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkhausDBModel.Stockwerk" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkhausDBModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ParkhausDBModel.Tarif" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkhausDBModel.Ticket" Width="1.5" PointX="5.25" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkhausDBModel.Freie_Parkplaetze" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ParkhausDBModel.Freie_Plaetze_Pro_Stockwerk" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
@@ -19,6 +18,7 @@
         <EntityTypeShape EntityType="ParkhausDBModel.Zahlung" Width="1.5" PointX="10" PointY="1.875" />
         <AssociationConnector Association="ParkhausDBModel.FK_Zahlung_Dauermieter" />
         <EntityTypeShape EntityType="ParkhausDBModel.Umsatz_pro_Monat" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="ParkhausDBModel.Tarif" Width="1.5" PointX="3.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

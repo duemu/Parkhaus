@@ -231,15 +231,6 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityType Name="Tarif">
-          <Key>
-            <PropertyRef Name="TarifID" />
-          </Key>
-          <Property Name="TarifID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TarifTyp" Type="Int32" Nullable="false" />
-          <Property Name="Zeit" Type="Decimal" />
-          <Property Name="Preis" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-        </EntityType>
         <EntityType Name="Ticket">
           <Key>
             <PropertyRef Name="TicketID" />
@@ -296,7 +287,6 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
           <EntitySet Name="Parkplatz" EntityType="Self.Parkplatz" />
           <EntitySet Name="Stockwerk" EntityType="Self.Stockwerk" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <EntitySet Name="Tarif" EntityType="Self.Tarif" />
           <EntitySet Name="Ticket" EntityType="Self.Ticket" />
           <EntitySet Name="Freie_Parkplaetze" EntityType="Self.Freie_Parkplaetze" />
           <EntitySet Name="Freie_Plaetze_Pro_Stockwerk" EntityType="Self.Freie_Plaetze_Pro_Stockwerk" />
@@ -319,6 +309,7 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
             <End Role="Zahlung" EntitySet="Zahlung" />
           </AssociationSet>
           <EntitySet Name="Umsatz_pro_Monat" EntityType="ParkhausDBModel.Umsatz_pro_Monat" />
+          <EntitySet Name="Tarif" EntityType="ParkhausDBModel.Tarif" />
         </EntityContainer>
         <EntityType Name="Dauermieter">
           <Key>
@@ -377,6 +368,15 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
           <Property Name="Jahr" Type="Int32" />
           <Property Name="Preis" Type="Decimal" Precision="38" Scale="2" />
         </EntityType>
+        <EntityType Name="Tarif">
+          <Key>
+            <PropertyRef Name="TarifID" />
+          </Key>
+          <Property Name="TarifID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TarifTyp" Type="Int32" Nullable="false" />
+          <Property Name="Zeit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Preis" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -408,16 +408,6 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tarif">
-            <EntityTypeMapping TypeName="ParkhausDBModel.Tarif">
-              <MappingFragment StoreEntitySet="Tarif">
-                <ScalarProperty Name="TarifID" ColumnName="TarifID" />
-                <ScalarProperty Name="TarifTyp" ColumnName="TarifTyp" />
-                <ScalarProperty Name="Zeit" ColumnName="Zeit" />
-                <ScalarProperty Name="Preis" ColumnName="Preis" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -479,6 +469,16 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
                 <ScalarProperty Name="Monat" ColumnName="Monat" />
                 <ScalarProperty Name="Typ" ColumnName="Typ" />
                 <ScalarProperty Name="EDMXID" ColumnName="EDMXID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tarif">
+            <EntityTypeMapping TypeName="ParkhausDBModel.Tarif">
+              <MappingFragment StoreEntitySet="Tarif">
+                <ScalarProperty Name="Preis" ColumnName="Preis" />
+                <ScalarProperty Name="Zeit" ColumnName="Zeit" />
+                <ScalarProperty Name="TarifTyp" ColumnName="TarifTyp" />
+                <ScalarProperty Name="TarifID" ColumnName="TarifID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
