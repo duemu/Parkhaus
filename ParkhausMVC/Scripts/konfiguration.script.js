@@ -65,8 +65,9 @@ $('.tbl-tarif').on('click', '.button', function () {
             break;
         case "add":
             $.post("/Konfiguration/tarif_hinzufuegen", {
-                stockwerkBezeichnung: $tr.find("input[name=txt-bezeichnung]").first().val(),
-                anzParkplaetze: $tr.find("input[name=txt-anzahl]").first().val()
+                typ:  $tr.data("typ"),
+                zeit: $tr.find("input[name=txt-zeit]").first().val(),
+                preis: $tr.find("input[name=txt-preis]").first().val()
             }).done(function (data) {
                 var $newTr = $tr.before().clone(true);
                 $tr.before().append($newTr);
@@ -79,11 +80,10 @@ $('.tbl-tarif').on('click', '.button', function () {
             $tr.find("input").prop("readOnly", true);
             $tr.find(".button[data-name=edit]").show();
 
-            console.log(stockwerkID);
             $.post("/konfiguration/tarif_bearbeiten", {
-                id: stockwerkID,
-                bezeichnung: $tr.find("input[name=txt-bezeichnung]").first().val(),
-                anzParkplaetze: $tr.find("input[name=txt-anzahl]").first().val()
+                id: tarifID,
+                zeit: $tr.find("input[name=txt-zeit]").first().val(),
+                preis: $tr.find("input[name=txt-preis]").first().val()
             }).done(function (data) {
                 console.log(data);
             });

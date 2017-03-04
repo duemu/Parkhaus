@@ -21,7 +21,9 @@ namespace ParkhausMVC.Controllers
 
         public ActionResult Tarif()
         {
-            return View(_context.Tarif.ToList());
+            List<Parktarif> parktarif = _context.Parktarif.ToList();
+
+            return View(parktarif);
         }
 
         public ActionResult stockwerk_hinzufuegen(string stockwerkBezeichnung, int anzParkplaetze)
@@ -50,14 +52,14 @@ namespace ParkhausMVC.Controllers
 
         public ActionResult tarif_hinzufuegen(int typ, decimal zeit, decimal preis)
         {
-            Tarif tarif = new Tarif(typ, zeit, preis);
+            Parktarif tarif = new Parktarif(typ, zeit, preis);
 
             return RedirectToAction("Tarif");
         }
 
         public ActionResult tarif_bearbeiten(int id, decimal zeit, decimal preis)
         {
-            Tarif tarif = _context.Tarif.Where(t => t.TarifID == id).First();
+            Parktarif tarif = _context.Parktarif.Where(t => t.TarifID == id).First();
 
             tarif.bearbeiten(zeit, preis);
 
@@ -69,7 +71,7 @@ namespace ParkhausMVC.Controllers
         public void tarif_loeschen(int id)
         {
 
-            Tarif tarif = _context.Tarif.Where(t => t.TarifID == id).First();
+            Parktarif tarif = _context.Parktarif.Where(t => t.TarifID == id).First();
 
             tarif.loeschen();
 

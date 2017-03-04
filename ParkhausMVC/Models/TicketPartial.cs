@@ -9,7 +9,6 @@ namespace ParkhausMVC.Models
     public partial class Ticket
     {
         private ParkhausDBEntities _context = new ParkhausDBEntities();
-        private ParkplatzController pc = new ParkplatzController();
 
         public void eintreten(DateTime eingangsdatum, string typ, int code)
         {
@@ -60,12 +59,11 @@ namespace ParkhausMVC.Models
             {
                 //Neuer Tarifcontroller erstellen
                 TarifController tarifController = new TarifController();
-
                 //Preis berechnen
-                this.Preis = (decimal)tarifController.hole_tarif(this.Eingangsdatum, (DateTime)this.Ausgangsdatum);
-                //Änderungen speichern
-                _context.SaveChanges();
+                this.Preis = (decimal)tarifController.hole_tarif(this.Eingangsdatum, (DateTime)this.Ausgangsdatum); 
             }
+            //Änderungen speichern
+            _context.SaveChanges();
         }
     }
 }

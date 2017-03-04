@@ -17,7 +17,7 @@
             {
                 <tr><td>@dauermieter.Name</td><td>@dauermieter.Vorname</td><td>@dauermieter.Parkplatz.Parkplatznummer</td><td>@dauermieter.Parkplatz.Stockwerk.Bezeichung</td><td>@dauermieter.Code</td>
                     <td>
-                        @if (dauermieter.hat_rechung_bezahlt(false))
+                        @if (dauermieter.hat_rechung_bezahlt())
                         {
                             <text><i class="glyphicon glyphicon-ok"></i> Bezahlt</text>
 

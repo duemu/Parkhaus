@@ -23,6 +23,15 @@
           <Property Name="Parkplatznummer" Type="int" />
           <Property Name="StockwerkID" Type="int" />
         </EntityType>
+        <EntityType Name="Parktarif">
+          <Key>
+            <PropertyRef Name="TarifID" />
+          </Key>
+          <Property Name="TarifID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TarifTyp" Type="int" Nullable="false" />
+          <Property Name="Zeit" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Preis" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
         <EntityType Name="Stockwerk">
           <Key>
             <PropertyRef Name="StockwerkID" />
@@ -39,15 +48,6 @@
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
-        <EntityType Name="Tarif">
-          <Key>
-            <PropertyRef Name="TarifID" />
-          </Key>
-          <Property Name="TarifID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TarifTyp" Type="int" Nullable="false" />
-          <Property Name="Zeit" Type="numeric" Precision="18" Scale="2" />
-          <Property Name="Preis" Type="numeric" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="Ticket">
           <Key>
@@ -153,9 +153,9 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
         <EntityContainer Name="ParkhausDBModelStoreContainer">
           <EntitySet Name="Dauermieter" EntityType="Self.Dauermieter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Parkplatz" EntityType="Self.Parkplatz" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parktarif" EntityType="Self.Parktarif" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stockwerk" EntityType="Self.Stockwerk" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tarif" EntityType="Self.Tarif" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zahlung" EntityType="Self.Zahlung" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Freie_Parkplaetze" EntityType="Self.Freie_Parkplaetze" store:Type="Views" store:Schema="dbo">
@@ -309,7 +309,7 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
             <End Role="Zahlung" EntitySet="Zahlung" />
           </AssociationSet>
           <EntitySet Name="Umsatz_pro_Monat" EntityType="ParkhausDBModel.Umsatz_pro_Monat" />
-          <EntitySet Name="Tarif" EntityType="ParkhausDBModel.Tarif" />
+          <EntitySet Name="Parktarif" EntityType="ParkhausDBModel.Parktarif" />
         </EntityContainer>
         <EntityType Name="Dauermieter">
           <Key>
@@ -368,13 +368,13 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
           <Property Name="Jahr" Type="Int32" />
           <Property Name="Preis" Type="Decimal" Precision="38" Scale="2" />
         </EntityType>
-        <EntityType Name="Tarif">
+        <EntityType Name="Parktarif">
           <Key>
             <PropertyRef Name="TarifID" />
           </Key>
           <Property Name="TarifID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TarifTyp" Type="Int32" Nullable="false" />
-          <Property Name="Zeit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Zeit" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Preis" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
       </Schema>
@@ -472,9 +472,9 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tarif">
-            <EntityTypeMapping TypeName="ParkhausDBModel.Tarif">
-              <MappingFragment StoreEntitySet="Tarif">
+          <EntitySetMapping Name="Parktarif">
+            <EntityTypeMapping TypeName="ParkhausDBModel.Parktarif">
+              <MappingFragment StoreEntitySet="Parktarif">
                 <ScalarProperty Name="Preis" ColumnName="Preis" />
                 <ScalarProperty Name="Zeit" ColumnName="Zeit" />
                 <ScalarProperty Name="TarifTyp" ColumnName="TarifTyp" />

@@ -55,6 +55,7 @@ namespace ParkhausMVC.Controllers
             //Ticket austreten lassen
             ticket.austreten(austrittsdatum_d);
 
+            context.SaveChanges();
             //Änderungen als JSON zurückmelden
             return Json(new
             {

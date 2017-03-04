@@ -5,24 +5,25 @@ using System.Web;
 
 namespace ParkhausMVC.Models
 {
-    public partial class Tarif
+    public partial class Parktarif
     {
         ParkhausDBEntities _context = new ParkhausDBEntities();
 
-        public Tarif(int typ,decimal zeit,decimal preis)
+        public Parktarif() { }
+        public Parktarif(int typ,decimal zeit,decimal preis)
         {
             this.TarifTyp = typ;
             this.Zeit = zeit;
             this.Preis = preis;
 
-            _context.Tarif.Add(this);
+            _context.Parktarif.Add(this);
             _context.SaveChanges();    
         }
 
         public void loeschen()
         {
-            var tarif = _context.Tarif.Where(t => t.TarifID == this.TarifID).First();
-            _context.Tarif.Remove(tarif);
+            var tarif = _context.Parktarif.Where(t => t.TarifID == this.TarifID).First();
+            _context.Parktarif.Remove(tarif);
             _context.SaveChanges();
         }
 

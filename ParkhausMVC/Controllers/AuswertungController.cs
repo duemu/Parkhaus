@@ -1,4 +1,5 @@
 ﻿using ParkhausMVC.Models;
+using ParkhausMVC.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,21 @@ namespace ParkhausMVC.Controllers
         // GET: Auswertung
         ParkhausDBEntities context = new ParkhausDBEntities();
 
-        public ActionResult Index()
+        public ActionResult Index(FormCollection forms)
         {
-             List<Umsatz_pro_Monat> umsaetze = context.Umsatz_pro_Monat.ToList();
-            return View(umsaetze);
+
+            List<Umsatz_pro_Monat> umsaetze = context.Umsatz_pro_Monat.ToList();
+
+            if (forms != null)
+            {
+
+
+            }
+            
+
+            
+
+            return View(new AuswertungViewModel { umsatzListe = umsaetze, filter = umsaetze });
         }
     }
 }

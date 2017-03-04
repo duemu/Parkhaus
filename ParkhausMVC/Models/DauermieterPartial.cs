@@ -81,7 +81,7 @@ namespace ParkhausMVC.Models
             //Liegt das Eingangsdatum von dem 15. wird geprüft, ob die Rechnung für den Vormonat bezahlt wurde
             if (eingangsdatum.Day < 15)
                 {
-                    eingangsdatum.AddMonths(-1);
+                    eingangsdatum = eingangsdatum.AddMonths(-1);
                 }
 
             int count = _context.Zahlung.Where(z => z.DauermieterID == this.DauermieterID && z.Datum.Month == eingangsdatum.Month && z.Datum.Year == eingangsdatum.Year).Count();

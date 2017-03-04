@@ -18,7 +18,7 @@
         <EntityTypeShape EntityType="ParkhausDBModel.Zahlung" Width="1.5" PointX="10" PointY="1.875" />
         <AssociationConnector Association="ParkhausDBModel.FK_Zahlung_Dauermieter" />
         <EntityTypeShape EntityType="ParkhausDBModel.Umsatz_pro_Monat" Width="1.5" PointX="0.75" PointY="7.75" />
-        <EntityTypeShape EntityType="ParkhausDBModel.Tarif" Width="1.5" PointX="3.375" PointY="7.75" />
+        <EntityTypeShape EntityType="ParkhausDBModel.Parktarif" Width="1.5" PointX="3.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -12,11 +12,11 @@ namespace ParkhausMVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Tarif
+    public partial class Parktarif
     {
         public int TarifID { get; set; }
         public int TarifTyp { get; set; }
-        public Nullable<decimal> Zeit { get; set; }
+        public decimal Zeit { get; set; }
         public decimal Preis { get; set; }
     }
 }

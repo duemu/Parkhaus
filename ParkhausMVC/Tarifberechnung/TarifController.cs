@@ -38,8 +38,8 @@ namespace ParkhausMVC
         public double berechne_Tag_Tarif(double anz_tage)
         {
             //Holt den Tarif für den Tag
-            List<Tarif> tarife = context.Tarif.Where(t => t.TarifTyp == 3).ToList();
-            Tarif tarif  =tarife.Last();
+            List<Parktarif> tarife = context.Parktarif.Where(t => t.TarifTyp == 3).ToList();
+            Parktarif tarif  =tarife.Last();
             int gerundete_tage = Convert.ToInt16(Math.Ceiling(anz_tage));
             return (double) tarif.Preis * gerundete_tage;
         }
@@ -58,11 +58,12 @@ namespace ParkhausMVC
 
             //Stunde holen
             int hour = eintrittszeit.Hour;
-            
-            
-            List<Tarif> tarifs = context.Tarif.Where(t => t.TarifTyp == tarifType && t.Zeit <= hour).OrderBy(t => t.Zeit).ToList();
 
-            Tarif tarif = tarifs.Last();
+            List<Parktarif> tarife = context.Parktarif.ToList();
+
+            List<Parktarif> tarifs = context.Parktarif.Where(t => t.TarifTyp == tarifType && t.Zeit <= hour).OrderBy(t => t.Zeit).ToList();
+
+            Parktarif tarif = tarifs.Last();
 
             totalPreis += (double) tarif.Preis * schritt;
 

@@ -34,6 +34,6 @@ namespace ParkhausMVC.Models
         public virtual DbSet<Dauermieter> Dauermieter { get; set; }
         public virtual DbSet<Zahlung> Zahlung { get; set; }
         public virtual DbSet<Umsatz_pro_Monat> Umsatz_pro_Monat { get; set; }
-        public virtual DbSet<Tarif> Tarif { get; set; }
+        public virtual DbSet<Parktarif> Parktarif { get; set; }
     }
 }
