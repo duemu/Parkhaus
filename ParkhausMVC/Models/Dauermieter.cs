@@ -25,6 +25,7 @@ namespace ParkhausMVC.Models
         public string Vorname { get; set; }
         public Nullable<int> Code { get; set; }
         public Nullable<int> ParkplatzID { get; set; }
+        public Nullable<System.DateTime> Erstelldatum { get; set; }
     
         public virtual Parkplatz Parkplatz { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

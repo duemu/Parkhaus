@@ -53,15 +53,15 @@ namespace ParkhausMVC.Models
 
             //Randomgenerator erstellen
             Random rndm = new Random();
-
-            do { 
-                //Code zwischen 10000 und 100000000 erstellen
-                int code = rndm.Next(10000, 1000000000);
+            int code = 0;
+            do {
+                //Code zwischen 100000 und 999999 erstellen
+                code = rndm.Next(100000, 999999);
                 //Prüft ob diese Code schon vergeben wurde
                 count = _context.Dauermieter.Where(d => d.Code == code).Count();
             } while (count != 0);
 
-            this.Code = Code;
+            this.Code = code;
         }
        
 
@@ -78,8 +78,10 @@ namespace ParkhausMVC.Models
 
         public bool hat_rechung_bezahlt(DateTime eingangsdatum)
         {
-            //Liegt das Eingangsdatum von dem 15. wird geprüft, ob die Rechnung für den Vormonat bezahlt wurde
-            if (eingangsdatum.Day < 15)
+            /*Liegt das Eingangsdatum von dem 15. wird geprüft, ob die Rechnung für den Vormonat bezahlt wurde.
+            Ausgenommen sind die Dauermieter, die sich erst in diesem Monat angemeldet haben
+             */
+            if (eingangsdatum.Day < 15 && !(this.Erstelldatum.Value.Month == eingangsdatum.Month && this.Erstelldatum.Value.Year == eingangsdatum.Year))
                 {
                     eingangsdatum = eingangsdatum.AddMonths(-1);
                 }

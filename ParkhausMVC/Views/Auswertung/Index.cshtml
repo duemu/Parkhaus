@@ -1,49 +1,73 @@
-﻿@model List<ParkhausMVC.Models.Umsatz_pro_Monat>
+﻿@model ParkhausMVC.ViewModel.AuswertungViewModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Umsatz";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
+
+}
+
 <div class="container">
-    <h2>Umsatz pro Monat</h2>
-    <div class="btn-group" role="group" aria-label="...">
+    <h2>Umsatz</h2>
+    <div class="btn-toolbar">
         <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Jahr
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="#">Alle</a></li>
-                @foreach (var jahr in @Model.GroupBy(m => m.Jahr).Select(group => group.First()))
-                {
-                    <li><a href="#">@jahr.Jahr</a></li>
-                }
-            </ul>
-        </div>
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Monat
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="#">Alle</a></li>
-                @foreach (var monat in @Model.GroupBy(m => m.Monat).Select(group => group.First()))
-                {
-                    <li><a href="#">@monat.Monat</a></li>
-                }
-            </ul>
+            <div class="btn-group btn-group-jahr" role="group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="btn-titel">@Model.jahr</span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-jahr">
+                    <li><a href="#">Alle Jahre</a></li>
+                    @foreach (var jahr in @Model.umsatzListeFilter.GroupBy(m => m.Jahr).Select(group => group.First()))
+                    {
+                        <li data-jahr="@jahr.Jahr"><a href="#">@jahr.Jahr</a></li>
+                    }
+                </ul>
+
+            </div>
+            <div class="btn-group btn-group-monat" role="group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="btn-titel">@Model.monat</span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-monat">
+                    <li><a href="#">Alle Monate</a></li>
+                    @foreach (var monat in @Model.umsatzListeFilter.GroupBy(m => m.Monat).Select(group => group.First()))
+                    {
+                        <li data-monat="@monat.MonatNr"><a href="#">@monat.Monat</a></li>
+                    }
+                </ul>
+
+            </div>
         </div>
 
+      
+        <div class="btn-group btn-group-typ" data-toggle="buttons">
+            <label class="btn btn-default @if(Model.typ =="Alle") { <text>active</text>  }">
+                <input type="radio" name="options" value="Alle" autocomplete="off" @if(Model.typ =="Alle") { <text>checked</text>  } > Alle
+            </label>
+            <label class="btn btn-default @if(Model.typ == "Gelegenheitsnutzer") { <text>active</text>  }">
+                <input type="radio" name="options" value="Gelegenheitsnutzer" autocomplete="off" @if(Model.typ == "Gelegenheitsnutzer") { <text>checked</text>  } > Gelegenheitsnutzer
+            </label>
+            <label class="btn btn-default @if(Model.typ == "Dauermieter") { <text>active</text>  } ">
+                <input type="radio" name="options" value="Dauermieter" autocomplete="off" @if(Model.typ == "Dauermieter") { <text>checked</text>  } > Dauermieter
+            </label>
+        </div>
+
+
+        <div class="btn-group" role="group">
+            <button id="btn-filter" type="button" class="btn btn-primary">Filtern</button>
+        </div>
     </div>
-
-    <table class="table table-hover">
+    <table class="table table-hover">        
         <thead>
             <tr><td>Typ</td><td>Monat</td><td>Jahr</td><td class="text-right">Total Umsatz</td></tr>
         </thead>
         <tbody>
-            @if (Model.Count != 0)
+            @if (Model.umsatzListe.Count != 0)
             {
 
-                foreach (var umsatz in Model)
+                foreach (var umsatz in Model.umsatzListe)
                 {
                     <tr>
                         <td>@umsatz.Typ</td>
@@ -52,7 +76,7 @@
                         <td class="text-right">@umsatz.Preis CHF</td>
                     </tr>
                 }
-                <tr><td colspan="3">Summe:</td> <td class="text-right"> @Model.Sum(u => u.Preis) CHF</td></tr>
+                <tr><td colspan="3">Summe:</td> <td class="text-right"> @Model.umsatzListe.Sum(u => u.Preis) CHF</td></tr>
             }
         </tbody>
     </table>

@@ -214,6 +214,9 @@
     <Compile Include="Models\Parktarif.cs">
       <DependentUpon>ParkhausDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Protokollierung.cs">
+      <DependentUpon>ParkhausDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Stockwerk.cs">
       <DependentUpon>ParkhausDB.tt</DependentUpon>
     </Compile>
@@ -236,6 +239,7 @@
     <Compile Include="Tarifberechnung\Feiertage.cs" />
     <Compile Include="Tarifberechnung\TarifController.cs" />
     <Compile Include="ViewModel\AuswertungViewModel.cs" />
+    <Compile Include="ViewModel\ProtokollierungViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datetimepicker.css" />
@@ -246,6 +250,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\simple-sidebar.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -276,6 +281,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Scripts\auswertung.script.js" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.js.map" />
     <Content Include="Content\bootstrap-select.css.map" />
@@ -388,6 +394,8 @@
     <Content Include="Scripts\konfiguration.script.js" />
     <Content Include="Views\Auswertung\Index.cshtml" />
     <Content Include="Views\Konfiguration\Tarif.cshtml" />
+    <Content Include="Views\Auswertung\Protokollierung.cshtml" />
+    <Content Include="Views\Home\Uebersicht.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

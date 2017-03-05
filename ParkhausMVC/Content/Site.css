@@ -4,12 +4,16 @@
 }
 
 
+html, body{
+        height:100%!important;
+}
+   
 
 body {
     padding-top: 50px;
     padding-bottom: 20px;
     overflow:hidden;
-    height:100%;
+ 
 }
 
 .body-content{
@@ -49,7 +53,13 @@ textarea {
 
 #schranke_div,#ticket_div{
     margin-left: 10px;
+    margin-right: 10px;
 }
+
+#sidebar-pfeil{
+    cursor:pointer;
+}
+
 
 .ticket{
     display: none;
@@ -98,11 +108,12 @@ textarea {
 
 .vis{
     height: 100%;
+    overflow:hidden;
 }
 
 .vis .pp-row{
     overflow-y: scroll;
-    height: 600px;
+    height: calc(100% - 150px);
 }
 
 .vis .pp-row .pp {
@@ -150,7 +161,7 @@ textarea {
 }
 
 .vis .pp.dauermieter{
-   box-shadow: inset 0px -15px 0px -3px rgba(0,140,255,1);
+   border-bottom: 10px solid rgba(0,140,255,1);
 }
 
 .alert{

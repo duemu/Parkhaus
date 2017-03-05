@@ -16,6 +16,13 @@ namespace ParkhausMVC.Controllers
 
             List<Stockwerk> stockwerke = context.Stockwerk.ToList();
             
+            return View("Uebersicht",stockwerke);
+        }
+
+        public ActionResult Uebersicht()
+        {
+
+            List<Stockwerk> stockwerke = context.Stockwerk.ToList();
             return View(stockwerke);
         }
 

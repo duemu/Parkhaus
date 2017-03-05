@@ -14,6 +14,7 @@
           <Property Name="Vorname" Type="varchar" MaxLength="250" />
           <Property Name="Code" Type="int" />
           <Property Name="ParkplatzID" Type="int" />
+          <Property Name="Erstelldatum" Type="datetime" />
         </EntityType>
         <EntityType Name="Parkplatz">
           <Key>
@@ -31,6 +32,19 @@
           <Property Name="TarifTyp" Type="int" Nullable="false" />
           <Property Name="Zeit" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Preis" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ParkhausDB.dbo.Protokollierung' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Protokollierung">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Datum" Type="datetime" />
+          <Property Name="Parkplatz" Type="varchar" MaxLength="250" />
+          <Property Name="Stockwerk" Type="varchar" MaxLength="250" />
+          <Property Name="Typ" Type="varchar" MaxLength="250" />
+          <Property Name="Bezeichnung" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="Stockwerk">
           <Key>
@@ -98,6 +112,7 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
           </Key>
           <Property Name="EDMXID" Type="int" Nullable="false" />
           <Property Name="Typ" Type="varchar" MaxLength="18" Nullable="false" />
+          <Property Name="MonatNr" Type="int" />
           <Property Name="Monat" Type="nvarchar" MaxLength="30" />
           <Property Name="Jahr" Type="int" />
           <Property Name="Preis" Type="decimal" Precision="38" Scale="2" />
@@ -158,6 +173,16 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zahlung" EntityType="Self.Zahlung" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Protokollierung" EntityType="Self.Protokollierung" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Protokollierung].[LogID] AS [LogID], 
+    [Protokollierung].[Datum] AS [Datum], 
+    [Protokollierung].[Parkplatz] AS [Parkplatz], 
+    [Protokollierung].[Stockwerk] AS [Stockwerk], 
+    [Protokollierung].[Typ] AS [Typ], 
+    [Protokollierung].[Bezeichnung] AS [Bezeichnung]
+    FROM [dbo].[Protokollierung] AS [Protokollierung]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="Freie_Parkplaetze" EntityType="Self.Freie_Parkplaetze" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Freie_Parkplaetze].[Parkplatznummer] AS [Parkplatznummer], 
@@ -176,6 +201,7 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
             <DefiningQuery>SELECT 
     [Umsatz_pro_Monat].[EDMXID] AS [EDMXID], 
     [Umsatz_pro_Monat].[Typ] AS [Typ], 
+    [Umsatz_pro_Monat].[MonatNr] AS [MonatNr], 
     [Umsatz_pro_Monat].[Monat] AS [Monat], 
     [Umsatz_pro_Monat].[Jahr] AS [Jahr], 
     [Umsatz_pro_Monat].[Preis] AS [Preis]
@@ -308,8 +334,9 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
             <End Role="Dauermieter" EntitySet="Dauermieter" />
             <End Role="Zahlung" EntitySet="Zahlung" />
           </AssociationSet>
-          <EntitySet Name="Umsatz_pro_Monat" EntityType="ParkhausDBModel.Umsatz_pro_Monat" />
           <EntitySet Name="Parktarif" EntityType="ParkhausDBModel.Parktarif" />
+          <EntitySet Name="Protokollierung" EntityType="ParkhausDBModel.Protokollierung" />
+          <EntitySet Name="Umsatz_pro_Monat" EntityType="ParkhausDBModel.Umsatz_pro_Monat" />
         </EntityContainer>
         <EntityType Name="Dauermieter">
           <Key>
@@ -322,6 +349,7 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
           <Property Name="ParkplatzID" Type="Int32" />
           <NavigationProperty Name="Parkplatz" Relationship="ParkhausDBModel.FK_Dauermieter_Parkplatz" FromRole="Dauermieter" ToRole="Parkplatz" />
           <NavigationProperty Name="Zahlung" Relationship="ParkhausDBModel.FK_Zahlung_Dauermieter" FromRole="Dauermieter" ToRole="Zahlung" />
+          <Property Name="Erstelldatum" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_Dauermieter_Parkplatz">
           <End Type="ParkhausDBModel.Parkplatz" Role="Parkplatz" Multiplicity="0..1" />
@@ -357,6 +385,26 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Parktarif">
+          <Key>
+            <PropertyRef Name="TarifID" />
+          </Key>
+          <Property Name="TarifID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TarifTyp" Type="Int32" Nullable="false" />
+          <Property Name="Zeit" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Preis" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Protokollierung">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Datum" Type="DateTime" Precision="3" />
+          <Property Name="Parkplatz" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Stockwerk" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Typ" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Bezeichnung" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="Umsatz_pro_Monat">
           <Key>
             <PropertyRef Name="EDMXID" />
@@ -367,15 +415,7 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
           <Property Name="Monat" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="Jahr" Type="Int32" />
           <Property Name="Preis" Type="Decimal" Precision="38" Scale="2" />
-        </EntityType>
-        <EntityType Name="Parktarif">
-          <Key>
-            <PropertyRef Name="TarifID" />
-          </Key>
-          <Property Name="TarifID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TarifTyp" Type="Int32" Nullable="false" />
-          <Property Name="Zeit" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Preis" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="MonatNr" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -443,6 +483,7 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
           <EntitySetMapping Name="Dauermieter">
             <EntityTypeMapping TypeName="ParkhausDBModel.Dauermieter">
               <MappingFragment StoreEntitySet="Dauermieter">
+                <ScalarProperty Name="Erstelldatum" ColumnName="Erstelldatum" />
                 <ScalarProperty Name="ParkplatzID" ColumnName="ParkplatzID" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Vorname" ColumnName="Vorname" />
@@ -461,17 +502,6 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Umsatz_pro_Monat">
-            <EntityTypeMapping TypeName="ParkhausDBModel.Umsatz_pro_Monat">
-              <MappingFragment StoreEntitySet="Umsatz_pro_Monat">
-                <ScalarProperty Name="Preis" ColumnName="Preis" />
-                <ScalarProperty Name="Jahr" ColumnName="Jahr" />
-                <ScalarProperty Name="Monat" ColumnName="Monat" />
-                <ScalarProperty Name="Typ" ColumnName="Typ" />
-                <ScalarProperty Name="EDMXID" ColumnName="EDMXID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Parktarif">
             <EntityTypeMapping TypeName="ParkhausDBModel.Parktarif">
               <MappingFragment StoreEntitySet="Parktarif">
@@ -479,6 +509,30 @@ warning 6002: The table/view 'ParkhausDB.dbo.Umsatz_pro_Monat' does not have a p
                 <ScalarProperty Name="Zeit" ColumnName="Zeit" />
                 <ScalarProperty Name="TarifTyp" ColumnName="TarifTyp" />
                 <ScalarProperty Name="TarifID" ColumnName="TarifID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Protokollierung">
+            <EntityTypeMapping TypeName="ParkhausDBModel.Protokollierung">
+              <MappingFragment StoreEntitySet="Protokollierung">
+                <ScalarProperty Name="Bezeichnung" ColumnName="Bezeichnung" />
+                <ScalarProperty Name="Typ" ColumnName="Typ" />
+                <ScalarProperty Name="Stockwerk" ColumnName="Stockwerk" />
+                <ScalarProperty Name="Parkplatz" ColumnName="Parkplatz" />
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Umsatz_pro_Monat">
+            <EntityTypeMapping TypeName="ParkhausDBModel.Umsatz_pro_Monat">
+              <MappingFragment StoreEntitySet="Umsatz_pro_Monat">
+                <ScalarProperty Name="MonatNr" ColumnName="MonatNr" />
+                <ScalarProperty Name="Preis" ColumnName="Preis" />
+                <ScalarProperty Name="Jahr" ColumnName="Jahr" />
+                <ScalarProperty Name="Monat" ColumnName="Monat" />
+                <ScalarProperty Name="Typ" ColumnName="Typ" />
+                <ScalarProperty Name="EDMXID" ColumnName="EDMXID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

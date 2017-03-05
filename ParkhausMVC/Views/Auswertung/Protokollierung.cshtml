@@ -1,0 +1,54 @@
+﻿@model ParkhausMVC.ViewModel.ProtokollierungViewModel
+@{
+    ViewBag.Title = "Protokollierung";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <h2>Protokollierung</h2>
+
+    <table class="table table-striped">
+
+        @foreach (var eintrag in Model.protokollierung)
+        {
+            string pfeil;
+
+            if (eintrag.Bezeichnung == "Eingetreten") {
+                pfeil = "glyphicon-arrow-right";
+            }
+            else
+            {
+                pfeil = "glyphicon-arrow-left";
+            }
+
+            <tr><td><i class="glyphicon @pfeil"></i> @eintrag.Bezeichnung</td> <td>@eintrag.Datum</td><td>Parkplatz @eintrag.Parkplatz Stockwerk @eintrag.Stockwerk</td><td>@eintrag.Typ</td></tr>
+        }
+
+    </table>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int i = 1; i <= Model.anzahlSeiten; i++)
+            {
+                string klasse = "";
+
+                if (i == Model.aktiveSeite)
+                {
+                    klasse = "active";
+                }
+                    <li class="@klasse"><a href="/Auswertung/Protokollierung?seite=@i">@i</a></li>
+                }
+    
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+</div>

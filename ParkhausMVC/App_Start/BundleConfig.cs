@@ -16,7 +16,8 @@ namespace ParkhausMVC
 
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
                 "~/Scripts/script.js",
-                "~/Scripts/konfiguration.script.js"
+                "~/Scripts/konfiguration.script.js",
+                "~/Scripts/auswertung.script.js"
                 ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -30,12 +31,14 @@ namespace ParkhausMVC
                       "~/Scripts/moment.min.js",
                       "~/Scripts/de.js",
                       "~/Scripts/bootstrap-datetimepicker.min.js",
-                      "~/Scripts/bootstrap-select.js"));
+                      "~/Scripts/bootstrap-select.js"
+                      ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/bootstrap-datetimepicker.min.css"
+                      "~/Content/bootstrap-datetimepicker.min.css",
+                      "~/Content/simple-sidebar.css"
                       ));
         }
     }

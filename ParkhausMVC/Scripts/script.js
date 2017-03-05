@@ -15,7 +15,7 @@
         }
 
     });
-
+    /*
     $('#eintrittsdatum').on('dp.change', function () {
         if (!$(this).val().length) {
             $('#btnEintreten').prop('disabled', true);
@@ -23,9 +23,21 @@
             $('#btnEintreten').prop('disabled', false);
         }
     })
+    */
+ 
 
-    $('#austrittsdatum').on('dp.change', function () {
+    $('#eintrittsdatum').on('dp.hide', function () {
         if (!$(this).val().length) {
+            $('#btnEintreten').prop('disabled', true);
+        } else {
+            $('#btnEintreten').prop('disabled', false);
+        }
+    })
+
+
+    $('#austrittsdatum').on('dp.hide', function () {
+       
+        if (!$(this).val().length || !$('.pp.selected').length) {
             $('#btnAustreten').prop('disabled', true);
         } else {
             $('#btnAustreten').prop('disabled', false);
@@ -58,8 +70,14 @@
                     $('#eintrittscode').val("");
                     $('#btnEintreten').prop('disabled', true);
 
+
+                    var elementTop = $('#stockwerk' + data.stockwerkID).offset().top;
+                    var divTop = $('.pp-row').first().offset().top;
+                    var elementRelativeTop = elementTop - divTop;
+                    console.log("elementRelativeTop:" + elementRelativeTop);
+
                     $('.pp-row').animate({
-                        scrollTop: $('#stockwerk' + data.stockwerkID).offsetParent().top
+                        scrollTop: elementRelativeTop
                     }, 500);
 
 
@@ -75,6 +93,19 @@
         });
 
     });
+
+    $('.pp-row').on('scroll', function () {
+
+        var offsetSeite = $(this).offset().top;
+
+        var offsetStockwerk = $("#stockwerk11").offset().top;
+
+        var offsetTotal = offsetSeite + this.scrollTop;
+
+        console.log("ScrollTop:" + this.scrollTop + " OffsetTop:" + offsetSeite + " offsetStockwerk:" + offsetStockwerk + " offsetTotal:" + offsetTotal);
+       
+       
+    })
 
     $("#btnAustreten").click(function () {
         var id =  $('.pp.selected').first().attr('id');
@@ -113,7 +144,9 @@
         $.ajax({
             url: '/ticket/getTicket',
             data: { ParkplatzID: id },
-     
+            error: function (e) {
+                // console.log(e);
+            },
             success: function (data) {
                 console.log(data);
                 var eintritttsdatumzeit = new Date(parseInt(data.eingangsdatum.substr(6)));
@@ -122,17 +155,22 @@
                 $('.pp').removeClass("selected");
                 $('#' + id).addClass('selected');
 
-                $ticket = $("#ticket_div .ticket");
-                $ticket.find(".ticket-preis").first().hide();
+                $('#austrittsdatum').prop('disabled', false);
+                $('#austrittsdatum').data("DateTimePicker").minDate(moment(eintritttsdatumzeit).add(1, 'm'));
 
-                $ticket.find(".ticket-austrittsdatum").first().hide();
-                $ticket.find(".ticket-eintrittsdatum").first().text(eintritttsdatum);
-                $ticket.find(".ticket-eintrittszeit").first().text(eintritttszeit);
-                $ticket.find(".ticket-parkplatznr").first().text(data.parkplatzNr);
-                $ticket.find(".ticket-stockwerk").first().text(data.stockwerk);
-                $ticket.find(".ticket-barcode").first().text(data.ticketID);
-                $ticket.find(".ticket-ticketID").first().text(data.ticketID);
-                $("#ticket_div .ticket").show();
+                if(!$('#'+id).hasClass("dauermieter")){
+                    $ticket = $("#ticket_div .ticket");
+                    $ticket.find(".ticket-preis").first().hide();
+
+                    $ticket.find(".ticket-austrittsdatum").first().hide();
+                    $ticket.find(".ticket-eintrittsdatum").first().text(eintritttsdatum);
+                    $ticket.find(".ticket-eintrittszeit").first().text(eintritttszeit);
+                    $ticket.find(".ticket-parkplatznr").first().text(data.parkplatzNr);
+                    $ticket.find(".ticket-stockwerk").first().text(data.stockwerk);
+                    $ticket.find(".ticket-barcode").first().text(data.ticketID);
+                    $ticket.find(".ticket-ticketID").first().text(data.ticketID);
+                    $("#ticket_div .ticket").show();
+                }
             },
             type: 'POST'
 
@@ -144,43 +182,23 @@
         if ($(this).hasClass("selected")) {
             $(this).removeClass("selected");
             $("#ticket_div .ticket").hide();
+            $('#btnAustreten').prop('disabled', true);
+            $('#austrittsdatum').prop('disabled', true);
+            $('#austrittsdatum').val('');
             return false;
         }
-        var id = this.id;
-        $.ajax({
-            url: '/ticket/getTicket',
-            data: { ParkplatzID: id },
-            error: function (e) {
-                // console.log(e);
-            },
-            success: function (data) {
-                console.log(data);
-                var eintritttsdatumzeit = new Date(parseInt(data.eingangsdatum.substr(6)));
-                var eintritttsdatum = moment(eintritttsdatumzeit).format('DD.MMMM.YYYY');
-                var eintritttszeit  = moment(eintritttsdatumzeit).format('HH:mm');
-                $('.pp').removeClass("selected");
-                $('#' + id).addClass('selected');
-
-                $ticket = $("#ticket_div .ticket");
-                $ticket.find(".ticket-preis").first().hide();
-
-                $ticket.find(".ticket-austrittsdatum").first().hide();
-                $ticket.find(".ticket-eintrittsdatum").first().text(eintritttsdatum);
-                $ticket.find(".ticket-eintrittszeit").first().text(eintritttszeit);
-                $ticket.find(".ticket-parkplatznr").first().text(data.parkplatzNr);
-                $ticket.find(".ticket-stockwerk").first().text(data.stockwerk);
-                $ticket.find(".ticket-barcode").first().text(data.ticketID);
-                $ticket.find(".ticket-ticketID").first().text(data.ticketID);
-                $("#ticket_div .ticket").show();
-            },
-            type: 'POST'
-
-        });
+        
+        ticket_anzeigen(this.id);
 
     });
 
 
-
+    $("#sidebar-pfeil").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+        $("#sidebar-pfeil").toggleClass("glyphicon-circle-arrow-right");
+        $("#sidebar-pfeil").toggleClass("glyphicon-circle-arrow-left");
+    });
 
 
 

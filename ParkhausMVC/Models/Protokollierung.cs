@@ -12,13 +12,13 @@ namespace ParkhausMVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Umsatz_pro_Monat
+    public partial class Protokollierung
     {
-        public int EDMXID { get; set; }
+        public int LogID { get; set; }
+        public Nullable<System.DateTime> Datum { get; set; }
+        public string Parkplatz { get; set; }
+        public string Stockwerk { get; set; }
         public string Typ { get; set; }
-        public string Monat { get; set; }
-        public Nullable<int> Jahr { get; set; }
-        public Nullable<decimal> Preis { get; set; }
-        public Nullable<int> MonatNr { get; set; }
+        public string Bezeichnung { get; set; }
     }
 }
