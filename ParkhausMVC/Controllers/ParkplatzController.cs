@@ -51,7 +51,7 @@ namespace ParkhausMVC.Controllers
             return context.Stockwerk.Where(s => s.StockwerkID == stockwerkID).FirstOrDefault();
         }
 
-        [JsonErrorHandler]
+        [JsonFehlerbehandlung]
         public ActionResult add_stockwerk(string stockwerkBezeichnung, int anzParkplaetze)
         {
             Stockwerk stockwerk = new Stockwerk { Bezeichung = stockwerkBezeichnung };

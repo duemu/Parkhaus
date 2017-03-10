@@ -177,7 +177,7 @@
     <Compile Include="Controllers\KonfigurationController.cs" />
     <Compile Include="Controllers\ParkplatzController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
-    <Compile Include="Filter\JsonErrorHandlerAttribute.cs" />
+    <Compile Include="Filter\JsonFehlerbehandlungAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -10,8 +10,14 @@ namespace ParkhausMVC.ViewModel
     {
         public List<Protokollierung> protokollierung { get; set; }
 
-        public int anzahlSeiten;
+        public int anzahlSeiten { get; set; }
 
-        public int aktiveSeite;
+        public int aktiveSeite { get; set; }
+
+        public string von_datum { get; set; }
+
+        public string bis_datum { get; set; }
+
+        public string typ { get; set; } = "Alle";
     }
 }

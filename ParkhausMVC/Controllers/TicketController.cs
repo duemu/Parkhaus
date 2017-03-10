@@ -15,8 +15,8 @@ namespace ParkhausMVC.Controllers
 
         ParkhausDBEntities context = new ParkhausDBEntities();
 
-        [JsonErrorHandler]
-        public ActionResult createTicket(string eintritttsdatum, string typ, int code)
+        [JsonFehlerbehandlung]
+        public ActionResult erstelle_Ticket(string eintritttsdatum, string typ, int code)
         {
 
             //Ticket erstellen

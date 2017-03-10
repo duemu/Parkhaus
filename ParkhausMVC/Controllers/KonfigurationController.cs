@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace ParkhausMVC.Controllers
 {
-    [JsonErrorHandler]
+    [JsonFehlerbehandlungAttribute]
     public class KonfigurationController : Controller
     {
 

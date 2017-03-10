@@ -9,7 +9,7 @@ namespace ParkhausMVC
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
-            filters.Add(new JsonErrorHandlerAttribute());
+            //filters.Add(new JsonErrorHandlerAttribute());
         }
     }
 

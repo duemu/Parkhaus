@@ -15,16 +15,7 @@
         }
 
     });
-    /*
-    $('#eintrittsdatum').on('dp.change', function () {
-        if (!$(this).val().length) {
-            $('#btnEintreten').prop('disabled', true);
-        } else {
-            $('#btnEintreten').prop('disabled', false);
-        }
-    })
-    */
- 
+
 
     $('#eintrittsdatum').on('dp.hide', function () {
         if (!$(this).val().length) {
@@ -50,7 +41,7 @@
         var code_val = $('#eintrittscode').val();
         if (!code_val) code_val = 0;
         $.ajax({
-            url: '/ticket/createTicket',
+            url: '/ticket/erstelle_Ticket',
             type: 'POST',
             data: {
                 eintritttsdatum: $('#eintrittsdatum').val(),
@@ -128,8 +119,9 @@
                     $('#' + id).addClass("frei");
 
                     $ticket = $("#ticket_div .ticket");
-                    $ticket.find(".ticket-preis").first().show().html(data.preis);
-                    $ticket.find(".ticket-austrittsdatum").first().show().html($('#austrittsdatum').val());
+                    $ticket.find(".quittung-element").show();
+                    $ticket.find(".ticket-preis").first().html(data.preis);
+                    $ticket.find(".ticket-austrittsdatum").first().html($('#austrittsdatum').val());
                     
                     $('#austrittsdatum').val("");
 
@@ -160,9 +152,8 @@
 
                 if(!$('#'+id).hasClass("dauermieter")){
                     $ticket = $("#ticket_div .ticket");
-                    $ticket.find(".ticket-preis").first().hide();
-
-                    $ticket.find(".ticket-austrittsdatum").first().hide();
+                   
+                    $ticket.find(".quittung-element").hide();
                     $ticket.find(".ticket-eintrittsdatum").first().text(eintritttsdatum);
                     $ticket.find(".ticket-eintrittszeit").first().text(eintritttszeit);
                     $ticket.find(".ticket-parkplatznr").first().text(data.parkplatzNr);

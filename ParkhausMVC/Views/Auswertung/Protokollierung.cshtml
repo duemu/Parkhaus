@@ -5,14 +5,44 @@
 }
 <div class="container">
     <h2>Protokollierung</h2>
+    <div class="btn-toolbar">
+        <div class="btn-group" role="group">
+            
+            <input type="datetime" id="log-von-datum" class="form-control log-datetimepicker" value="@Model.von_datum" placeholder="Von-Datum" name="log-von-datum" />
+        </div>
+        <div class="btn-group" role="group">
+           
+            <input type="datetime" id="log-bis-datum" class="form-control log-datetimepicker" value="@Model.bis_datum" placeholder="Bis-Datum" name="log-bis-datum" />
+        </div>
+       
+        <div class="btn-group btn-group-typ" id="btn-typ" data-toggle="buttons">
+            <label class="btn btn-default @if(Model.typ =="Alle") { <text>active</text>  }">
+                <input type="radio" name="options" value="Alle" autocomplete="off" @if (Model.typ == "Alle") { <text> checked</text>  }> Alle
+            </label>
+            <label class="btn btn-default @if(Model.typ == "Gelegenheitsnutzer") { <text>active</text>  }">
+                <input type="radio" name="options" value="Gelegenheitsnutzer" autocomplete="off" @if (Model.typ == "Gelegenheitsnutzer") { <text> checked</text>  }> Gelegenheitsnutzer
+            </label>
+            <label class="btn btn-default @if(Model.typ == "Dauermieter") { <text>active</text>  } ">
+                <input type="radio" name="options" value="Dauermieter" autocomplete="off" @if (Model.typ == "Dauermieter") { <text> checked</text>  }> Dauermieter
+            </label>
+        </div>
+
+        <div class="btn-group" role="group">
+            <button id="btn-log-filter" type="button" class="btn btn-primary">Filtern</button>
+        </div>
+    </div>
 
     <table class="table table-striped">
+        <thead>
+            <tr><td>Ereignis</td><td>Datum</td><td>Parkplatz / Stockwerk</td><td>Typ</td></tr>
+        </thead>
 
         @foreach (var eintrag in Model.protokollierung)
         {
             string pfeil;
 
-            if (eintrag.Bezeichnung == "Eingetreten") {
+            if (eintrag.Bezeichnung == "Eingetreten")
+            {
                 pfeil = "glyphicon-arrow-right";
             }
             else
@@ -40,9 +70,9 @@
                 {
                     klasse = "active";
                 }
-                    <li class="@klasse"><a href="/Auswertung/Protokollierung?seite=@i">@i</a></li>
-                }
-    
+                <li class="@klasse"><a onclick="window.location='/Auswertung/Protokollierung/@i'+ window.location.search">@i</a></li>
+            }
+
             <li>
                 <a href="#" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>

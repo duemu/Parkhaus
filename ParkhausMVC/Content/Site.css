@@ -47,8 +47,6 @@ textarea {
 .sidebar{
      box-shadow: 0px 0px 21px -3px rgba(0,0,0,0.38);
      border-right: 1px solid #bbb;
-     
-
 }
 
 #schranke_div,#ticket_div{
@@ -59,7 +57,6 @@ textarea {
 #sidebar-pfeil{
     cursor:pointer;
 }
-
 
 .ticket{
     display: none;
@@ -101,10 +98,6 @@ textarea {
     font-size: 1.5em;
 }
 
-.ticket-preis,
-.ticket-austrittsdatum{
-    display: none;
-}
 
 .vis{
     height: 100%;
@@ -142,6 +135,10 @@ textarea {
     cursor: pointer;
 }
 
+.vis .pp.dauermieter{
+   border-bottom: 10px solid rgba(0,140,255,1);
+}
+
 .pp.selected{
     box-shadow: 0px 0px 17px 0px rgba(0,0,0,1);
 }
@@ -160,9 +157,7 @@ textarea {
     border: 1px solid black;
 }
 
-.vis .pp.dauermieter{
-   border-bottom: 10px solid rgba(0,140,255,1);
-}
+
 
 .alert{
     display: none;

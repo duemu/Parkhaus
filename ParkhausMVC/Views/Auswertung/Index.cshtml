@@ -78,6 +78,10 @@
                 }
                 <tr><td colspan="3">Summe:</td> <td class="text-right"> @Model.umsatzListe.Sum(u => u.Preis) CHF</td></tr>
             }
+            else
+            {
+                <tr><td  colspan="4">Keine Einträge gefunden </td></tr>
+            }
         </tbody>
     </table>
 </div>
