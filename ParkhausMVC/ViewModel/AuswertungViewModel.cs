@@ -9,9 +9,9 @@ namespace ParkhausMVC.ViewModel
     public class AuswertungViewModel
     {
 
-        public List<Umsatz_pro_Monat> umsatzListe { get; set; }
+        public List<Umsatz> umsatzListe { get; set; }
 
-        public List<Umsatz_pro_Monat> umsatzListeFilter { get; set; }
+        public List<Umsatz> umsatzListeFilter { get; set; }
 
         public string monat { get; set; } = "Alle Monate";
 

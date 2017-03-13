@@ -175,8 +175,6 @@
     <Compile Include="Controllers\DauermieterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KonfigurationController.cs" />
-    <Compile Include="Controllers\ParkplatzController.cs" />
-    <Compile Include="Controllers\TicketController.cs" />
     <Compile Include="Filter\JsonFehlerbehandlungAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -185,12 +183,6 @@
       <DependentUpon>ParkhausDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DauermieterPartial.cs" />
-    <Compile Include="Models\Freie_Parkplaetze.cs">
-      <DependentUpon>ParkhausDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Freie_Plaetze_Pro_Stockwerk.cs">
-      <DependentUpon>ParkhausDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ParkhausDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -229,7 +221,7 @@
       <DependentUpon>ParkhausDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TicketPartial.cs" />
-    <Compile Include="Models\Umsatz_pro_Monat.cs">
+    <Compile Include="Models\Umsatz.cs">
       <DependentUpon>ParkhausDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Zahlung.cs">
@@ -399,7 +391,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\api\" />
     <Folder Include="Views\Parkplatz\" />
   </ItemGroup>
   <ItemGroup>

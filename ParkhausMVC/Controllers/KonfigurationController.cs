@@ -63,6 +63,8 @@ namespace ParkhausMVC.Controllers
 
             tarif.bearbeiten(zeit, preis);
 
+            _context.SaveChanges();
+
             return RedirectToAction("Tarif");
 
 

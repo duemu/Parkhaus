@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ParkhausMVC.Models;
+using ParkhausMVC.Filter;
+using System.Globalization;
 
 namespace ParkhausMVC.Controllers
 {
@@ -19,25 +21,68 @@ namespace ParkhausMVC.Controllers
             return View("Uebersicht",stockwerke);
         }
 
-        public ActionResult Uebersicht()
+        [JsonFehlerbehandlung]
+        public ActionResult eintreten(string eintritttsdatum, string typ, int code)
         {
+            //Ticket erstellen
+            Ticket t = new Ticket();
 
-            List<Stockwerk> stockwerke = context.Stockwerk.ToList();
-            return View(stockwerke);
+            //Eingangsdatum von Javascript-Format in Datetime umwandeln
+            DateTime eingangsdatum = DateTime.ParseExact(eintritttsdatum, "dd.MM.yyyy HH:mm", CultureInfo.InvariantCulture);
+
+            //Ticket eintreten
+            t.eintreten(eingangsdatum, typ, code);
+
+            //Parkplatz holen, um ihn auf dem Ticket anzuzeigen 
+            Parkplatz p = context.Parkplatz.Where(pp => pp.ParkplatzID == t.ParkplatzID).FirstOrDefault();
+
+
+            //Json zurückgeben
+            return Json(new
+            {
+                success = true,
+                tiketID = t.TicketID,
+                parkplatzID = p.ParkplatzID,
+                parkplatzNr = p.Parkplatznummer,
+                stockwerk = p.Stockwerk.Bezeichung,
+                stockwerkID = p.StockwerkID
+            });
         }
 
-        public ActionResult About()
+        public ActionResult austreten(int parkplatzID, string austrittsdatum)
         {
-            ViewBag.Message = "Your application description page.";
+            //Ticket über die ParkplatzID ermitteln
+            Ticket ticket = context.Ticket.Where(t => t.ParkplatzID == parkplatzID && t.Ausgangsdatum == null).First();
 
-            return View();
+            //Austrittsdatum kommt von JavaScript als String, in Datetime umwandeln
+            DateTime austrittsdatum_d = DateTime.ParseExact(austrittsdatum, "dd.MM.yyyy HH:mm", CultureInfo.InvariantCulture);
+
+            //Ticket austreten lassen
+            ticket.austreten(austrittsdatum_d);
+
+            context.SaveChanges();
+            //Änderungen als JSON zurückmelden
+            return Json(new
+            {
+                success = true,
+                preis = ticket.Preis
+            });
         }
 
-        public ActionResult Contact()
+        public ActionResult ticket_anzeigen(int ParkplatzID)
         {
-            ViewBag.Message = "Your contact page.";
+            Ticket ticket = context.Ticket.Where(t => t.ParkplatzID == ParkplatzID && t.Ausgangsdatum == null).First();
 
-            return View();
+            return Json(new
+            {
+                eingangsdatum = ticket.Eingangsdatum,
+                ticketID = ticket.TicketID,
+                parkplatzNr = ticket.Parkplatz.Parkplatznummer,
+                stockwerk = ticket.Parkplatz.Stockwerk.Bezeichung
+            });
         }
+
+
+
     }
 }

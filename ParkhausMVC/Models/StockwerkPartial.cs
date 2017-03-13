@@ -9,14 +9,14 @@ namespace ParkhausMVC.Models
     {
         ParkhausDBEntities _context = new ParkhausDBEntities();
 
-
+        //Construktor des Stockwerks
         public Stockwerk(string bezeichnung, int anzParkplaetze)
         {
             //Setzt die Bezeichnung
             this.Bezeichung = bezeichnung;
-
+            //Fügt das Stockwerk der Stockwerktabelle zu
             _context.Stockwerk.Add(this);
-
+            //Erstellt die Anzahl 
             for (int ppNr = 1; ppNr <= anzParkplaetze; ppNr++)
             {
                 _context.Parkplatz.Add(new Parkplatz { Parkplatznummer = ppNr, StockwerkID = this.StockwerkID });
@@ -24,12 +24,12 @@ namespace ParkhausMVC.Models
 
             _context.SaveChanges();
         }
-
+        //Gibt eine Liste aller freien Parkplätze dieses Stockwerkts zurück
         public List<Parkplatz> Freie_Parkplaetze()
         {
             return this.Parkplatz.Where(p => p.ist_Frei() && !p.hat_dauermieter()).ToList();
         }
-
+        //Gibt die Anzahl aller freien Parkplätze dieses Stockwerkts zurück
         public int Anzahl_freie_Parkplaetze()
         {
             return this.Parkplatz.Where(p => p.ist_Frei() && !p.hat_dauermieter()).Count();
@@ -41,7 +41,7 @@ namespace ParkhausMVC.Models
 
             if(this.Parkplatz.Count() > anzParkplaetze)
             {
-                //var parkplaetze = this.Parkplatz.Where(p => p.Parkplatznummer > anzParkplaetze);
+     
 
                 var parkplaetze = _context.Parkplatz.Where(p => p.StockwerkID == this.StockwerkID && p.Parkplatznummer > anzParkplaetze);
 

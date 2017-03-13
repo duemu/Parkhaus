@@ -41,7 +41,7 @@
         var code_val = $('#eintrittscode').val();
         if (!code_val) code_val = 0;
         $.ajax({
-            url: '/ticket/erstelle_Ticket',
+            url: '/home/eintreten',
             type: 'POST',
             data: {
                 eintritttsdatum: $('#eintrittsdatum').val(),
@@ -101,7 +101,7 @@
     $("#btnAustreten").click(function () {
         var id =  $('.pp.selected').first().attr('id');
         $.ajax({
-            url: '/ticket/Austreten',
+            url: '/home/austreten',
             type: 'POST',
             data: {
                 austrittsdatum: $('#austrittsdatum').val(),
@@ -134,7 +134,7 @@
 
     function ticket_anzeigen(id) {
         $.ajax({
-            url: '/ticket/getTicket',
+            url: '/home/ticket_anzeigen',
             data: { ParkplatzID: id },
             error: function (e) {
                 // console.log(e);

@@ -18,7 +18,7 @@ namespace ParkhausMVC.Controllers
         public ActionResult Index(int? jahr, string monat, string typ)
         {
 
-            List<Umsatz_pro_Monat> umsaetze = context.Umsatz_pro_Monat.OrderBy(u => u.Jahr).OrderBy(u => u.MonatNr).ToList();
+            List<Umsatz> umsaetze = context.Umsatz.OrderBy(u => u.Jahr).OrderBy(u => u.MonatNr).ToList();
 
 
             AuswertungViewModel viewModel = new AuswertungViewModel();

@@ -11,7 +11,7 @@ namespace ParkhausMVC.Controllers
     {
 
         ParkhausDBEntities context = new ParkhausDBEntities();
-        ParkplatzController pc = new ParkplatzController();
+     
         // GET: Dauermieter
         public ActionResult Index()
         {

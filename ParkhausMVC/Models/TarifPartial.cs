@@ -29,7 +29,8 @@ namespace ParkhausMVC.Models
 
         public void bearbeiten(decimal zeit, decimal preis)
         {
-            this.Zeit = zeit;
+
+            this.Zeit =  zeit;
             this.Preis = preis;
             _context.SaveChanges();
         }

@@ -15,9 +15,7 @@
 				stockwerkBezeichnung: $tr.find("input[name=txt-bezeichnung]").first().val(),
 				anzParkplaetze: $tr.find("input[name=txt-anzahl]").first().val()
 			}).done(function (data) {
-				var $newTr = $tr.before().clone(true);
-				$tr.before().append($newTr);
-				$tr.find('input').val("");
+			    location.reload();
 			});
 			break;
 	    case "save":
@@ -56,6 +54,10 @@ $('.tbl-tarif').on('click', '.button', function () {
     var $tr = $(this).parents("tr");
     var tarifID = $tr.data("tarifid");
 
+    var input_zeit = $tr.find("input[name=txt-zeit]").first().val();
+
+    if (input_zeit == null) input_zeit = 0;
+
     switch (name) {
         case "edit":
             $tr.addClass("edit");
@@ -66,12 +68,10 @@ $('.tbl-tarif').on('click', '.button', function () {
         case "add":
             $.post("/Konfiguration/tarif_hinzufuegen", {
                 typ:  $tr.data("typ"),
-                zeit: $tr.find("input[name=txt-zeit]").first().val(),
+                zeit: input_zeit,
                 preis: $tr.find("input[name=txt-preis]").first().val()
             }).done(function (data) {
-                var $newTr = $tr.before().clone(true);
-                $tr.before().append($newTr);
-                $tr.find('input').val("");
+                location.reload();
             });
             break;
         case "save":
@@ -82,7 +82,7 @@ $('.tbl-tarif').on('click', '.button', function () {
 
             $.post("/konfiguration/tarif_bearbeiten", {
                 id: tarifID,
-                zeit: $tr.find("input[name=txt-zeit]").first().val(),
+                zeit: input_zeit,
                 preis: $tr.find("input[name=txt-preis]").first().val()
             }).done(function (data) {
                 console.log(data);

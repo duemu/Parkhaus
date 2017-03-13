@@ -5,25 +5,26 @@
 }
 <div class="container">
     <h2>Konfiguration</h2>
-    
+    <h3>Tarife</h3>
 
     <div class="row">
-        <div class="col-md-3">
-            <h3>Tarife</h3>
+        <div class="col-md-6">
+
             <h4>Normaltarif</h4>
-            <table id="tbl-tagestarif" class="table table-hover tbl-settings tbl-tarif">
+            <table id="tbl-Normaltarif" class="table table-hover tbl-settings tbl-tarif">
                 <tbody>
                     <tr><th>Gültig ab Zeit</th><th>Preis</th><th colspan="2"></th></tr>
-                    @foreach (var tarif in @Model.Where(t=>t.TarifTyp== 1))
+                    @foreach (var tarif in @Model.Where(t => t.TarifTyp == 1))
                     {
-                    
-                    <tr data-tarifID="@tarif.TarifID" data-typ="1" class="konfiguration-tr"><td><input type="text" readonly value="@tarif.Zeit" name="txt-zeit" class="tarif-zeit" />  </td><td><input type="number" readonly value="@tarif.Preis" name="txt-preis" class="tarif-preis" /></td><td><i id="stockwerk-editieren"  class="glyphicon glyphicon-pencil button" data-name="edit"> </i><i class="glyphicon glyphicon-ok button" data-name="save"> </i> </td><td><i class="glyphicon glyphicon-remove button" data-name="remove"> </i> </td> </tr>
+
+                        <tr data-tarifID="@tarif.TarifID" data-typ="1" class="konfiguration-tr"><td><input type="text" readonly value="@tarif.Zeit" name="txt-zeit" class="txt-zeit" />  </td><td><input type="number" readonly value="@tarif.Preis" name="txt-preis" class="txt-preis" /></td><td><i id="stockwerk-editieren" class="glyphicon glyphicon-pencil button" data-name="edit"> </i><i class="glyphicon glyphicon-ok button" data-name="save"> </i> </td><td><i class="glyphicon glyphicon-remove button" data-name="remove"> </i> </td> </tr>
                     }
-                    <tr class="konfiguration-tr" data-typ="1"><td width="80%"><input type="number" placeholder="Gültig ab Zeit" name="txt-zeit" class="tarif-zeit" /> </td><td><input type="number" placeholder="Preis"  name="txt-preis" class="tarif-preis" /></td><td><i id="stockwerk-editieren" class="glyphicon glyphicon-plus button"  data-name="add"> </i> </td><td><i class="glyphicon glyphicon-remove button" data-name="clear"> </i> </td> </tr>
+                    <tr class="konfiguration-tr" data-typ="1"><td width="80%"><input type="number" placeholder="Gültig ab Zeit" name="txt-zeit" class="txt-zeit" /> </td><td><input type="number" placeholder="Preis" name="txt-preis" class="txt-preis" /></td><td><i id="stockwerk-editieren" class="glyphicon glyphicon-plus button" data-name="add"> </i> </td><td><i class="glyphicon glyphicon-remove button" data-name="clear"> </i> </td> </tr>
 
                 </tbody>
             </table>
-
+        </div>
+        <div class="col-md-6">
             <h4>Wochenend und Feiertagstarif</h4>
             <table id="tbl-wochenendtarif" class="table table-hover tbl-settings tbl-tarif">
                 <tbody>
@@ -31,29 +32,45 @@
                     @foreach (var tarif in @Model.Where(t => t.TarifTyp == 2))
                     {
 
-                        <tr data-tarifID="@tarif.TarifID" data-typ="2" class="konfiguration-tr"><td><input type="text" readonly value="@tarif.Zeit" name="txt-bezeichnung" class="stockwerk-bezeichnung" />  </td><td><input type="number" readonly value="@tarif.Preis" name="txt-anzahl" class="stockwerk-bezeichnung" /></td><td><i id="stockwerk-editieren" class="glyphicon glyphicon-pencil button" data-name="edit"> </i><i class="glyphicon glyphicon-ok button" data-name="save"> </i> </td><td><i class="glyphicon glyphicon-remove button" data-name="remove"> </i> </td> </tr>
+                        <tr data-tarifID="@tarif.TarifID" data-typ="2" class="konfiguration-tr"><td><input type="text" readonly value="@tarif.Zeit" name="txt-zeit" class="txt-zeit" />  </td><td><input type="number" readonly value="@tarif.Preis" name="txt-preis" class="txt-preis" /></td><td><i id="stockwerk-editieren" class="glyphicon glyphicon-pencil button" data-name="edit"> </i><i class="glyphicon glyphicon-ok button" data-name="save"> </i> </td><td><i class="glyphicon glyphicon-remove button" data-name="remove"> </i> </td> </tr>
                     }
-                    <tr class="konfiguration-tr" data-typ="2"><td width="80%"><input type="number" placeholder="Gültig ab Zeit" name="txt-zeit" class="tarif-zeit" /> </td><td><input type="number" placeholder="Preis" name="txt-preis" class="tarif-preis" /></td><td><i id="stockwerk-editieren" class="glyphicon glyphicon-plus button" data-name="add"> </i> </td><td><i class="glyphicon glyphicon-remove button" data-name="clear"> </i> </td> </tr>
+                    <tr class="konfiguration-tr" data-typ="2"><td width="80%"><input type="number" placeholder="Gültig ab Zeit" name="txt-zeit" class="txt-zeit" /> </td><td><input type="number" placeholder="Preis" name="txt-preis" class="txt-preis" /></td><td><i id="stockwerk-editieren" class="glyphicon glyphicon-plus button" data-name="add"> </i> </td><td><i class="glyphicon glyphicon-remove button" data-name="clear"> </i> </td> </tr>
 
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
             <h4>Tagestarif</h4>
-            <table id="tbl-wochenendtarif" class="table table-hover tbl-settings tbl-tarif">
+            <table id="tbl-tagestarif" class="table table-hover tbl-settings tbl-tarif">
                 <tbody>
                     <tr class="konfiguration-tr"><th>Preis</th><th></th></tr>
                     @foreach (var tarif in @Model.Where(t => t.TarifTyp == 3))
                     {
 
-                        <tr data-tarifID="@tarif.TarifID" data-typ="3" class="konfiguration-tr"><td><input type="number" readonly value="@tarif.Preis" name="txt-anzahl" class="stockwerk-bezeichnung" /></td><td><i id="stockwerk-editieren" class="glyphicon glyphicon-pencil button" data-name="edit"> </i><i class="glyphicon glyphicon-ok button" data-name="save"> </i> </td> </tr>
+                        <tr data-tarifID="@tarif.TarifID" data-typ="3" class="konfiguration-tr"><td><input type="number" readonly value="@tarif.Preis" name="txt-preis" class="txt-preis" /></td><td><i id="stockwerk-editieren" class="glyphicon glyphicon-pencil button" data-name="edit"> </i><i class="glyphicon glyphicon-ok button" data-name="save"> </i> </td> </tr>
                     }
-                
+
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h4>Monatsmiete Dauermieter</h4>
+            <table id="tbl-dauermietertarif" class="table table-hover tbl-settings tbl-tarif">
+                <tbody>
+                    <tr class="konfiguration-tr"><th>Preis</th><th></th></tr>
+                    @foreach (var tarif in @Model.Where(t => t.TarifTyp == 4))
+                    {
+
+                        <tr data-tarifID="@tarif.TarifID" data-typ="4" class="konfiguration-tr"><td><input type="number" readonly value="@tarif.Preis" name="txt-preis" class="txt-preis" /></td><td><i id="stockwerk-editieren" class="glyphicon glyphicon-pencil button" data-name="edit"> </i><i class="glyphicon glyphicon-ok button" data-name="save"> </i> </td> </tr>
+                    }
+
                 </tbody>
             </table>
 
-
-
         </div>
-        
-      
-     </div>
+    </div>
+
+
 </div>
