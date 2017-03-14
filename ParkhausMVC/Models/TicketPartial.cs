@@ -63,10 +63,10 @@ namespace ParkhausMVC.Models
             //Nur berechnen wenn es sich nicht um ein Dauermieter handelt
             if (!this.Parkplatz.hat_dauermieter())
             {
-                //Neuer Tarifcontroller erstellen
-                TarifController tarifController = new TarifController();
+                //Neuer Tarifberechner erstellen
+                TarifBerechner tarifBerechner = new TarifBerechner();
                 //Preis berechnen
-                this.Preis = (decimal)tarifController.hole_tarif(this.Eingangsdatum, (DateTime)this.Ausgangsdatum); 
+                this.Preis = (decimal)tarifBerechner.hole_tarif(this.Eingangsdatum, (DateTime)this.Ausgangsdatum); 
             }
             //Änderungen speichern
             _context.SaveChanges();

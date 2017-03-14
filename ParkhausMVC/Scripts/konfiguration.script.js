@@ -1,6 +1,10 @@
-﻿$('#tbl-stockwerk').on('click', '.button', function () {
-	var name = $(this).data('name');
-	var $tr = $(this).parents("tr");
+﻿
+//Event Listener für die Stockwerkkonfiguration
+$('#tbl-stockwerk').on('click', '.button', function () {
+    //Holt den namen des Feldes -> Funktion
+    var name = $(this).data('name');
+    //Holt die zeile
+    var $tr = $(this).parents("tr");
 	var stockwerkID = $tr.data("stockwerkid");
 
 	switch (name) {
@@ -30,7 +34,11 @@
 	            bezeichnung:    $tr.find("input[name=txt-bezeichnung]").first().val(),
 	            anzParkplaetze: $tr.find("input[name=txt-anzahl]").first().val()
 	        }).done(function (data) {
-	            console.log(data);
+	            if (data.success == false) {
+	                $('#stockwerk-alert .message').text(data.error);
+	                $('#stockwerk-alert').show();
+	            }
+
 	        });
 
 	        break;
@@ -38,7 +46,12 @@
 	        $.post("/konfiguration/stockwerk_loeschen", {
 	            id: stockwerkID
 	        }).done(function (data) {
-	            $tr.hide();
+	            if (data.success == false) {
+	                $('#stockwerk-alert .message').text(data.error);
+	                $('#stockwerk-alert').show();
+	            }else{
+	                $tr.hide();
+	            }
 	        });
 			
 			break;

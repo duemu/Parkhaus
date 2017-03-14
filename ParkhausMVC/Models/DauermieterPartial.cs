@@ -36,7 +36,8 @@ namespace ParkhausMVC.Models
 
             //Weist einen neuen Parkplatz zu
             parkplatz_zuweisen();
-            
+
+            this.Erstelldatum = DateTime.Now;
             //Fügt einen neuen Dauermietereintrag der Tabelle hinzu
             _context.Dauermieter.Add(this);
             //Speichert die Änderung

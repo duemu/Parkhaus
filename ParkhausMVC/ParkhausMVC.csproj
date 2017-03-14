@@ -228,8 +228,8 @@
       <DependentUpon>ParkhausDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tarifberechnung\Feiertage.cs" />
-    <Compile Include="Tarifberechnung\TarifController.cs" />
+    <Compile Include="Models\Tarifberechnung\Feiertage.cs" />
+    <Compile Include="Models\Tarifberechnung\TarifController.cs" />
     <Compile Include="ViewModel\AuswertungViewModel.cs" />
     <Compile Include="ViewModel\ProtokollierungViewModel.cs" />
   </ItemGroup>

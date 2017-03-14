@@ -8,19 +8,23 @@
     
     <div class="row">
         <div class="col-md-3">
-            <h3>Stockwerke</h3>
-            <table id="tbl-stockwerk" class="table table-hover">
-                <tbody>
-                    @foreach (var stockwerk in @Model)
-                    {
-                    <tr data-stockwerkID="@stockwerk.StockwerkID" class="konfiguration-tr stockwerk-anzeige-tr"><td><input type="text" readonly value="@stockwerk.Bezeichung" name="txt-bezeichnung" class="stockwerk-bezeichnung" />  </td><td><input type="number" readonly value="@stockwerk.Parkplatz.Count" name="txt-anzahl" class="stockwerk-bezeichnung" /></td><td><i id="stockwerk-editieren"  class="glyphicon glyphicon-pencil button" data-name="edit"> </i><i class="glyphicon glyphicon-ok button" data-name="save"> </i> </td><td><i class="glyphicon glyphicon-remove button" data-name="remove"> </i> </td> </tr>
-                    }
-                    <tr><td width="80%"><input type="text" placeholder="Bezeichnung" name="txt-bezeichnung" class="stockwerk-bezeichnung" /> </td><td><input type="number" placeholder="Anzahl Parkplätze"  name="txt-anzahl" class="stockwerk-bezeichnung" /></td><td><i id="stockwerk-editieren" class="glyphicon glyphicon-plus button"  data-name="add"> </i> </td><td><i class="glyphicon glyphicon-remove button" data-name="clear"> </i> </td> </tr>
+            <div class="alert alert-danger alert-dismissible" id="stockwerk-alert" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Fehler! </strong><span class="message"></span>
+            </div>
+                <h3>Stockwerke</h3>
+                <table id="tbl-stockwerk" class="table table-hover">
+                    <tbody>
+                        @foreach (var stockwerk in @Model)
+                        {
+                            <tr data-stockwerkID="@stockwerk.StockwerkID" class="konfiguration-tr stockwerk-anzeige-tr"><td><input type="text" readonly value="@stockwerk.Bezeichung" name="txt-bezeichnung" class="stockwerk-bezeichnung" />  </td><td><input type="number" readonly value="@stockwerk.Parkplatz.Count" name="txt-anzahl" class="stockwerk-bezeichnung" /></td><td><i id="stockwerk-editieren" class="glyphicon glyphicon-pencil button" data-name="edit"> </i><i class="glyphicon glyphicon-ok button" data-name="save"> </i> </td><td><i class="glyphicon glyphicon-remove button" data-name="remove"> </i> </td> </tr>
+                        }
+                        <tr><td width="80%"><input type="text" placeholder="Bezeichnung" name="txt-bezeichnung" class="stockwerk-bezeichnung" /> </td><td><input type="number" placeholder="Anzahl Parkplätze" name="txt-anzahl" class="stockwerk-bezeichnung" /></td><td><i id="stockwerk-editieren" class="glyphicon glyphicon-plus button" data-name="add"> </i> </td><td><i class="glyphicon glyphicon-remove button" data-name="clear"> </i> </td> </tr>
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
 
-        </div>
+            </div>
         
       
      </div>

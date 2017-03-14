@@ -12,12 +12,12 @@ namespace ParkhausMVC.Controllers
     public class HomeController : Controller
     {
         ParkhausDBEntities context = new ParkhausDBEntities();
-                
+        //Wird als erstes aufgerufen, wenn die Website geladen wird        
         public ActionResult Index()
         {
-
+            //Holt die Stockwerkübersicht
             List<Stockwerk> stockwerke = context.Stockwerk.ToList();
-            
+            //Öffnet die Übersichtview
             return View("Uebersicht",stockwerke);
         }
 
@@ -40,10 +40,10 @@ namespace ParkhausMVC.Controllers
             //Json zurückgeben
             return Json(new
             {
-                success = true,
-                tiketID = t.TicketID,
-                parkplatzID = p.ParkplatzID,
-                parkplatzNr = p.Parkplatznummer,
+                success = true, //der Request war erfolgreich
+                tiketID = t.TicketID, 
+                parkplatzID = p.ParkplatzID, 
+                parkplatzNr = p.Parkplatznummer, 
                 stockwerk = p.Stockwerk.Bezeichung,
                 stockwerkID = p.StockwerkID
             });
@@ -68,11 +68,13 @@ namespace ParkhausMVC.Controllers
                 preis = ticket.Preis
             });
         }
-
+        //Zeigt das Ticket an, wenn man auf einen Parkplatz klickt
         public ActionResult ticket_anzeigen(int ParkplatzID)
         {
+            //Sucht das Ticket mit der übergebenen ParkplatzID und ohne Austrittsdatum 
             Ticket ticket = context.Ticket.Where(t => t.ParkplatzID == ParkplatzID && t.Ausgangsdatum == null).First();
 
+            //Gibt die Ticketinformationen als JSON zurück
             return Json(new
             {
                 eingangsdatum = ticket.Eingangsdatum,

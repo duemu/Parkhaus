@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ParkhausMVC
 {
-    class TarifController
+    class TarifBerechner
     {
         ParkhausDBEntities context = new ParkhausDBEntities();
 
